@@ -4,7 +4,7 @@ let bodyParser=require('body-parser');
 
 let cors=require('cors');
 
-const sequelize = require("./models/database");
+const sequelize = require("./utils/database");
 
 
 let app = express();
