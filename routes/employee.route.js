@@ -20,9 +20,14 @@ module.exports = function(app){
      app.get('/emp/api/v1/employees/:id', controller.findOne);
 
 
-      //route for updating the category
+      //route for updating (promoting) the employee
 
-      app.put('/emp/api/v1/employees/:id' , controller.update)
+      app.put('/emp/api/v1/employees/:id' , controller.update);
+
+
+      //route for updating the salary of employee
+
+      app.put('/emp/api/v1/employees/salary/:id' , controller.updateSalary);
    
 
 

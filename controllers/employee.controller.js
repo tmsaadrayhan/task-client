@@ -134,3 +134,41 @@ exports.update = (req, res) =>{
    })
 }
 
+
+
+exports.updateSalary = (req, res) =>{
+  /**
+   * need to parse the request body just like post method
+   */
+   const employee = {
+     salary : req.body.salary
+ }
+ /**
+  * need to know which employee's salary has to be updated
+  */
+ const employeeId = req.params.id ;
+ 
+ /**
+  * now update  the employee's salary
+  */
+   Employee.update(employee,{
+       where : {id : employeeId},
+       returning : true
+   }).then(updatedSalary =>{
+     // need to make a get call to get the updated salary
+     console.log(updatedSalary);
+     Employee.findByPk(employeeId).then(employeeRes =>{
+          res.status(200).send(employeeRes);
+     }).catch(err =>{
+         res.status(500).send({
+             message : "could not update employee's salary"
+         })
+     })
+     
+   }).catch(err =>{
+     res.status(500).send({
+         message : "error updating  the employee's salary"
+     })
+   })
+}
+
