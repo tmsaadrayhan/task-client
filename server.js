@@ -1,8 +1,34 @@
-const express = require('express');
+let express=require('express');
+
+let bodyParser=require('body-parser');
+
+let cors=require('cors');
+
+const sequelize = require("./models/database");
 
 
-const app = express();
+let app = express();
 
-app.listen(8000,() =>{
-    console.log("application started");
-})
+app.use(bodyParser.json());
+app.use(cors())
+
+
+
+
+
+sequelize
+  .sync()
+  .then((result) => {
+    
+    app.listen(8000, () => {
+      console.log(" listening to 8000 port ");
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+ 
+ 
+
+
+
