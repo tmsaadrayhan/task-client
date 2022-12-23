@@ -17,8 +17,12 @@ module.exports = function(app){
 
       
      // route for getting the category based on category id
-     app.get('/emp/api/v1/employees/:id', controller.findOne)
+     app.get('/emp/api/v1/employees/:id', controller.findOne);
 
+
+      //route for updating the category
+
+      app.put('/emp/api/v1/employees/:id' , controller.update)
    
 
 

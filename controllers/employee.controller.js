@@ -77,3 +77,60 @@ exports.findOne = (req, res) =>{
 }
 
 
+// handler for promoting employee
+
+exports.updateProm =  (req, res) => {
+  const employeeId = req.params.id;
+  const { job_title } = req.body;
+
+  Employee.update({job_title}, {
+    where: { id: employeeId }
+  })
+    .then(numUpdated => {
+      if (numUpdated) {
+        res.status(200).json({ message: 'Employee promoted successfully' });
+      } else {
+        res.status(404).json({ message: 'Employee not found' });
+      }
+    })
+    .catch(error => {
+      res.status(500).json({ message: 'Error promoting employee', error });
+    });
+};
+
+exports.update = (req, res) =>{
+  /**
+   * need to parse the request body just like post method
+   */
+   const employee = {
+     job_title : req.body.job_title
+ }
+ /**
+  * need to know which employee has to be updated(i.e. promoted)
+  */
+ const employeeId = req.params.id ;
+ 
+ /**
+  * now promote the employee
+  */
+   Employee.update(employee,{
+       where : {id : employeeId},
+       returning : true
+   }).then(promotedEmployee =>{
+     // need to make a get call to get the promoted employee
+     console.log(promotedEmployee);
+     Employee.findByPk(employeeId).then(employeeRes =>{
+          res.status(200).send(employeeRes);
+     }).catch(err =>{
+         res.status(500).send({
+             message : "could not promote employee"
+         })
+     })
+     
+   }).catch(err =>{
+     res.status(500).send({
+         message : "error promoting the employee"
+     })
+   })
+}
+
