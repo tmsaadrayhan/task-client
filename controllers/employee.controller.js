@@ -4,6 +4,7 @@
  * handler for creating a new employee resource
  */
 
+const { employee } = require("../models");
 const db = require("../models");
 const Employee = db.employee;
 
@@ -38,4 +39,41 @@ exports.create = (req , res)=>{
 
   }
 
-  
+
+  /**
+ * 
+ * hanlder for getting all the employees
+ * 
+ */
+
+exports.findAll = (req, res) =>{
+  Employee.findAll().then(employees =>{
+      res.status(200).send(employees);
+  }).catch(err=>{
+    res.status(500).send({
+      message : `failed to fetch employees`
+  })
+})
+}
+
+
+
+/**
+ * handler for getting employees based on the id
+ * 
+ */
+ 
+exports.findOne = (req, res) =>{
+  const employeeId = req.params.id;
+
+  Employee.findByPk(employeeId).then(employeeId =>{
+       res.status(201).send(employeeId);
+
+  }).catch(err =>{
+     res.status(500).send({
+         message : 'failed to get the employee'
+     })
+  })
+}
+
+

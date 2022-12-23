@@ -9,10 +9,15 @@ module.exports = function(app){
      
      app.post('/emp/api/v1/employees' , controller.create);
 
+
+
+     //route for  getting all the employees
      
+     app.get('/emp/api/v1/employees', controller.findAll);
 
       
-
+     // route for getting the category based on category id
+     app.get('/emp/api/v1/employees/:id', controller.findOne)
 
    
 
