@@ -36,5 +36,6 @@ var db =  {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 db.employee = require('./employee.model')(sequelize, Sequelize);
+db.leave = require('./leave.model')(sequelize, Sequelize);
 
 module.exports = db;
