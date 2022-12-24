@@ -3,7 +3,7 @@ const db = require("../models");
 const Leave = db.leave;
 const Employee = db.employee;
 
-
+//handler for creating new leave resource
 exports.create =  (req, res) => {
   const { employeeId, start_date, end_date, status } = req.body;
   Leave.create({
@@ -20,3 +20,16 @@ exports.create =  (req, res) => {
     });
 };
 
+
+
+//handler for fetching the leaves
+
+exports.findAll = (req, res) =>{
+  Leave.findAll().then(leaves =>{
+      res.status(200).send(leaves);
+  }).catch(err=>{
+    res.status(500).send({
+      message : `failed to fetch employees's leaves`
+  })
+})
+}

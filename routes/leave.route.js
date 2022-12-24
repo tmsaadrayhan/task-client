@@ -10,5 +10,8 @@ module.exports = function(app){
      app.post('/emp/api/v1/leaves' , controller.create);
 
       
+     //route for  getting all the leaves
+     
+     app.get('/emp/api/v1/leaves', controller.findAll);
 
 }
