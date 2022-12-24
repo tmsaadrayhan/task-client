@@ -18,4 +18,10 @@ module.exports = function(app){
 
       app.put('/emp/api/v1/leaves/:id' , controller.update);
 
+
+       //route for deleting the leave request
+
+     app.delete('/emp/api/v1/leaves/:id', controller.delete);
+
+
 }

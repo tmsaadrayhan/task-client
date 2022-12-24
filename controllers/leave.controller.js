@@ -53,3 +53,22 @@ exports.update = (req, res) => {
       res.status(500).json({ message: 'Error updating leave request', error });
     });
 };
+
+
+//handler for deleting the leave resource
+exports.delete = (req, res) => {
+  const id = req.params.id;
+  Leave.destroy({
+    where: { id: id }
+  })
+    .then(numDeleted => {
+      if (numDeleted) {
+        res.json({ message: 'Leave request deleted' });
+      } else {
+        res.status(404).json({ message: 'Leave request not found' });
+      }
+    })
+    .catch(error => {
+      res.status(500).json({ message: 'Error deleting leave request', error });
+    });
+};
