@@ -33,3 +33,23 @@ exports.findAll = (req, res) =>{
   })
 })
 }
+
+
+//handler for updating the leave resource
+exports.update = (req, res) => {
+  const id = req.params.id;
+  const { status } = req.body;
+  Leave.update({ status: status }, {
+    where: { id: id }
+  })
+    .then(numUpdated => {
+      if (numUpdated) {
+        res.status(200).json({ message: 'Leave request updated successfully' });
+      } else {
+        res.status(404).json({ message: 'Leave request not found' });
+      }
+    })
+    .catch(error => {
+      res.status(500).json({ message: 'Error updating leave request', error });
+    });
+};

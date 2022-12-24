@@ -14,4 +14,8 @@ module.exports = function(app){
      
      app.get('/emp/api/v1/leaves', controller.findAll);
 
+      //route for updating the leave
+
+      app.put('/emp/api/v1/leaves/:id' , controller.update);
+
 }
