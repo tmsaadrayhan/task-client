@@ -43,11 +43,11 @@ function init() {
      */
       Role.create({
         id:1,
-        name:"engineer"
+        name:"user"
     });
     Role.create({
         id:2,
-        name:"manager"
+        name:"admin"
     })
 
 
