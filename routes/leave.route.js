@@ -3,11 +3,12 @@
  */
 
 const controller = require("../controllers/leave.controller");
+const { requestValidator } = require("../middlewares");
 
 module.exports = function(app){
     //route for creating new leave
      
-     app.post('/emp/api/v1/leaves' , controller.create);
+     app.post('/emp/api/v1/leaves' ,[requestValidator.validateLeaveRequest] , controller.create);
 
       
      //route for  getting all the leaves
@@ -16,7 +17,7 @@ module.exports = function(app){
 
       //route for updating the leave
 
-      app.put('/emp/api/v1/leaves/:id' , controller.update);
+      app.put('/emp/api/v1/leaves/:id' ,[requestValidator.validateLeaveRequest] , controller.update);
 
 
        //route for deleting the leave request

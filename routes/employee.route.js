@@ -3,11 +3,11 @@
  */
 
 const controller = require("../controllers/employee.controller");
-
+const { requestValidator } = require("../middlewares");
 module.exports = function(app){
      //route for creating new employee
      
-     app.post('/emp/api/v1/employees' , controller.create);
+     app.post('/emp/api/v1/employees' ,[requestValidator.validateEmployeeRequest], controller.create);
 
 
 
@@ -22,12 +22,12 @@ module.exports = function(app){
 
       //route for updating (promoting) the employee
 
-      app.put('/emp/api/v1/employees/:id' , controller.update);
+      app.put('/emp/api/v1/employees/:id' ,[requestValidator.validateEmployeeRequest] , controller.update);
 
 
       //route for updating the salary of employee
 
-      app.put('/emp/api/v1/employees/salary/:id' , controller.updateSalary);
+      app.put('/emp/api/v1/employees/salary/:id' ,[requestValidator.validateEmployeeRequest] , controller.updateSalary);
 
       //route for deleting the employee
 
