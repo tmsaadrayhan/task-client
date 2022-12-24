@@ -1,11 +1,12 @@
 
 const authController = require("../controllers/auth.controller");
+const { verifySignUp } = require("../middlewares");
 
 module.exports = (app) =>{
     
-    // route for user creation
+    // route for user signup
 
-    app.post("/emp/api/v1/auth/signup",authController.signup );
+    app.post("/emp/api/v1/auth/signup" ,  [verifySignUp.checkDuplicateUsernameOrEmail,verifySignUp.checkRolesExisted] , authController.signup );
 
      // route for user signin
 
