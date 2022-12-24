@@ -28,6 +28,10 @@ module.exports = function(app){
       //route for updating the salary of employee
 
       app.put('/emp/api/v1/employees/salary/:id' , controller.updateSalary);
+
+      //route for deleting the employee
+
+      app.delete('/emp/api/v1/employees/:id' , controller.delete);
    
 
 

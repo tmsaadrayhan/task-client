@@ -172,3 +172,29 @@ exports.updateSalary = (req, res) =>{
    })
 }
 
+
+/**
+ * 
+ *providing support for deleting the employee
+ */
+
+ exports.delete = (req, res) =>{
+  const employeeId = req.params.id;
+
+  Employee.destroy({
+       where : {
+           id : employeeId
+       }
+  }).then(result =>{
+     res.status(200).send({
+        message : "successfully deleted"
+     })
+  }).catch(err =>{
+    res.status(500).send({
+        message : "some internal error happened"
+     
+  })
+})
+}
+
+
