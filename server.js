@@ -57,10 +57,33 @@ function init() {
         id:2,
         name:"admin"
     })
+    
 
 
+    //Initializing few managers
+    var managers = [
+      {
+          first_name: "sundar",
+          last_name : "pichai",
+          salary: 200000
+      },
+      {
+          first_name: "satya",
+          last_name : "nadella",
+          salary : 100000
+      }
+  ];
+
+  Manager.bulkCreate(managers).then(() => {
+      console.log("manager table is initialized");
+  }).catch(err => {
+      console.log("Error while initializing manager table");
+  })
 
 }
+
+
+
 
 
 
