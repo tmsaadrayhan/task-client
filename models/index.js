@@ -39,6 +39,7 @@ db.employee = require('./employee.model')(sequelize, Sequelize);
 db.leave = require('./leave.model')(sequelize, Sequelize);
 db.user = require('./user.model.js')(sequelize, Sequelize);
 db.role = require('./role.model.js')(sequelize, Sequelize);
+db.inout = require('./inout.model.js')(sequelize, Sequelize);
 
 /**
    * Establishing the relationship between Role and User
@@ -55,7 +56,16 @@ db.user.belongsToMany(db.role, {
 });
 
 
-db.ROLES = ["engineer", "manager"];
+db.ROLES = ["engineer", "manager","admin"];
+
+// establishing the relationship between user and inout : one to many
+db.user.hasMany(db.inout);
+
+
+// establishing the relationship between employee and inout : one to many
+db.employee.hasMany(db.inout);
+
+
 
 
 
