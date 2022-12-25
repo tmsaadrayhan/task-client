@@ -43,6 +43,8 @@ require('./routes/employee.route')(app);
 require('./routes/leave.route')(app);
 require('./routes/auth.routes')(app);
 require('./routes/inout.route')(app);
+require('./routes/manager.route')(app);
+require('./routes/empmanager.route')(app);
 
 
 function init() {
