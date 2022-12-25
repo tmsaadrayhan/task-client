@@ -40,6 +40,8 @@ db.leave = require('./leave.model')(sequelize, Sequelize);
 db.user = require('./user.model.js')(sequelize, Sequelize);
 db.role = require('./role.model.js')(sequelize, Sequelize);
 db.inout = require('./inout.model.js')(sequelize, Sequelize);
+db.manager = require('./manager.model.js')(sequelize , Sequelize);
+
 
 /**
    * Establishing the relationship between Role and User

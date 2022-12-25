@@ -6,7 +6,7 @@ let cors=require('cors');
 let app = express();
 
 app.use(bodyParser.json());
-app.use(cors())
+app.use(cors());
 
 /**
  * code for the table initialization
@@ -15,6 +15,13 @@ const db = require("./models"); // node will find index.js form models folder --
 const Employee = db.employee;
 const Leave = db.leave;
 const Role = db.role;
+const Inout = db.inout;
+const Manager = db.manager;
+
+
+
+Manager.hasMany(Employee);
+Employee.belongsTo(Manager);
 
 console.log(Employee);
 
@@ -35,6 +42,7 @@ db.sequelize.sync({force:true}).then(() => {
 require('./routes/employee.route')(app);
 require('./routes/leave.route')(app);
 require('./routes/auth.routes')(app);
+require('./routes/inout.route')(app);
 
 
 function init() {
