@@ -4,6 +4,8 @@
 
 const controller = require("../controllers/employee.controller");
 const { requestValidator ,authJwt} = require("../middlewares");
+
+
 module.exports = function(app){
      //route for creating new employee
      

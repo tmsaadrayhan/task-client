@@ -18,7 +18,8 @@ exports.create = (req , res)=>{
        first_name : req.body.first_name,
        last_name : req.body.last_name,
        job_title : req.body.job_title,
-       salary : req.body.salary
+       salary : req.body.salary,
+       managerId : req.body.managerId
    }
 
    // store this in db

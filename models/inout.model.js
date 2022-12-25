@@ -16,8 +16,8 @@ module.exports = (sequelize , Sequelize) => {
         allowNull: false,
       },
       out_time: {
-        type: Sequelize.DATE,
-        allowNull: false,
+        type: Sequelize.DATE
+        
       }
     });
     return Inout;
