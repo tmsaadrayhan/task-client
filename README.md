@@ -1,6 +1,6 @@
 # employeeManagementSystemBackend
 
-# Express.js based eCommerce Application
+# Express.js based Employee Management System
 
 
 ## Features
