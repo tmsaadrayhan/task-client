@@ -23,7 +23,7 @@
     * MySQL
     * JWT
     * Bcryptjs
-    * POSTMAN
+    * Postman
 
 
 
