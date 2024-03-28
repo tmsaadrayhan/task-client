@@ -10,6 +10,7 @@ import Main from "./Pages/Layout/Main.jsx";
 import Dashboard from "./Pages/Dashboard/Dashboard.jsx";
 import Projects from "./Pages/Projects/Projects.jsx";
 import ResetPassword from "./Pages/ResetPssword/ResetPassword.jsx";
+import CreateProject from "./Pages/CreatProject/CreateProject.jsx";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
       {
         path: "/projects",
         element: <Projects></Projects>,
+      },
+      {
+        path: "/create-project",
+        element: <CreateProject></CreateProject>,
       },
     ],
   },
