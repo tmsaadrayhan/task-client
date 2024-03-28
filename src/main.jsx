@@ -12,6 +12,10 @@ import Projects from "./Pages/Projects/Projects.jsx";
 import ResetPassword from "./Pages/ResetPssword/ResetPassword.jsx";
 import CreateProject from "./Pages/CreatProject/CreateProject.jsx";
 import EditProject from "./Pages/EditProject/EditProject.jsx";
+import ProjectView from "./Pages/ProjectView/ProjectView.jsx";
+import Tasks from "./Pages/Tasks/Tasks.jsx";
+import CreateTask from "./Pages/CreateTask/CreateTask.jsx";
+import EditTask from "./EditTask/EditTask.jsx";
 
 const router = createBrowserRouter([
   {
@@ -43,17 +47,35 @@ const router = createBrowserRouter([
         element: <Projects></Projects>,
       },
       {
+        // Create Project 
         path: "/create-project",
         element: <CreateProject></CreateProject>,
       },
+      
       {
+        // Edit Project
         path: "/edit-project",
         element: <EditProject></EditProject>,
       },
       {
         path: "/project-view",
-        element: <EditProject></EditProject>,
+        element: <ProjectView></ProjectView>,
       },
+      {
+        path: "/tasks",
+        element: <Tasks></Tasks>,
+      },
+      {
+        // Create Task
+        path: "/create-tasks",
+        element: <CreateTask></CreateTask>,
+      },
+      {
+        // Edit Task
+        path: "/edit-tasks",
+        element: <EditTask></EditTask>,
+      },
+
     ],
   },
 ]);

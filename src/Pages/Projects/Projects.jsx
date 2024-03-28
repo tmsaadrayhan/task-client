@@ -96,19 +96,19 @@ const Projects = () => {
           </div>
         </div>
         <div className="overflow-x-auto">
-          <table className="table w-full my-[1rem]">
+          <table className="table w-full my-[1rem] text-center">
             {/* head */}
             <thead className="bg-[#E8DEFD]">
               <tr>
-                <th className="px-[1rem]"></th>
-                <th className="px-[1rem]">Project</th>
-                <th className="px-[1rem]">Client</th>
-                <th className="px-[1rem]">Start Date</th>
-                <th className="px-[1rem]">Finish Date</th>
-                <th className="px-[1rem]">States</th>
-                <th className="px-[1rem]">Assigned</th>
-                <th className="px-[1rem]">Progress</th>
-                <th className="px-[1rem]">Action</th>
+                <th className="px-[1rem] mx-auto"></th>
+                <th className="px-[1rem] mx-auto">Project</th>
+                <th className="px-[1rem] mx-auto">Client</th>
+                <th className="px-[1rem] mx-auto">Start Date</th>
+                <th className="px-[1rem] mx-auto">Finish Date</th>
+                <th className="px-[1rem] mx-auto">States</th>
+                <th className="px-[1rem] mx-auto">Assigned</th>
+                <th className="px-[1rem] mx-auto">Progress</th>
+                <th className="px-[1rem] mx-auto">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -120,11 +120,7 @@ const Projects = () => {
                   </label>
                 </th>
                 <td>
-                  <div className="flex items-center gap-3">
-                    <div>
-                      <div className="font-bold">Project Title Here</div>
-                    </div>
-                  </div>
+                  <div className="font-bold">Project Title Here</div>
                 </td>
                 <td>
                   <div className="mx-auto w-fit">Client Name</div>
