@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import Login from "./Pages/Login/Login.jsx";
@@ -10,6 +9,7 @@ import Main from "./Pages/Layout/Main.jsx";
 import Dashboard from "./Pages/Dashboard/Dashboard.jsx";
 import Projects from "./Pages/Projects/Projects.jsx";
 import ResetPassword from "./Pages/ResetPssword/ResetPassword.jsx";
+import CreateProject from "./Pages/CreatProject/CreateProject.jsx";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: "/projects",
         element: <Projects></Projects>,
+      },
+      {
+        path: "/create-project",
+        element: <CreateProject></CreateProject>,
       },
     ],
   },
