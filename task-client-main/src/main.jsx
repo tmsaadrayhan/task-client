@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.jsx";
+
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import Login from "./Pages/Login/Login.jsx";
@@ -25,7 +25,7 @@ const router = createBrowserRouter([
     element: <ForgetPassword></ForgetPassword>,
   },
   {
-    path: "/reset-password",
+    path: "/reset-password/:resetToken",
     element: <ResetPassword></ResetPassword>,
   },
   {

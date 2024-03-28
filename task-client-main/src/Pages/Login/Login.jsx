@@ -72,6 +72,13 @@ const Login = () => {
               Login
             </button>
             <Link
+              to="/forget-password"
+              className="text-indigo-600 cursor-pointer text-sm mt-2 block"
+            >
+              Forgot Password?
+            </Link>
+
+            <Link
               to="/register"
               className="text-indigo-600 cursor-pointer text-sm mt-2 block"
             >

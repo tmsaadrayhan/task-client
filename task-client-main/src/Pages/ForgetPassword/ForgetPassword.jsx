@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import "react-toastify/dist/ReactToastify.css";
+import { toast, ToastContainer } from "react-toastify";
 import { useState } from "react";
 
 const ForgetPassword = () => {
@@ -69,6 +70,7 @@ const ForgetPassword = () => {
             </Link>
           </div>
         </form>
+        <ToastContainer position="bottom-right" autoClose={3000} />
       </div>
     </div>
   );
