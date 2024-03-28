@@ -8,6 +8,7 @@ import { IoIosSearch } from "react-icons/io";
 import { IoEyeOutline } from "react-icons/io5";
 import { FiEdit } from "react-icons/fi";
 import { MdOutlineCancel } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const Projects = () => {
   const status = (
@@ -73,9 +74,11 @@ const Projects = () => {
             <img className="me-[.2rem]" src={kanban} alt="Kanban Image" />
             Kanban View
           </button>
-          <button className="flex items-center text-[#FFFFFF] bg-[#8B5CF6] rounded-md px-[.5rem] py-[.25rem]">
-            <FiPlusCircle className="pe-[.25rem]" /> Create
-          </button>
+          <Link to="/create-project">
+            <button className="flex items-center text-[#FFFFFF] bg-[#8B5CF6] rounded-md px-[.5rem] py-[.25rem]">
+              <FiPlusCircle className="pe-[.25rem]" /> Create
+            </button>
+          </Link>
         </div>
         <hr className="solid mt-[1rem]"></hr>
         <div className="flex items-center w-full mt-[1rem]">

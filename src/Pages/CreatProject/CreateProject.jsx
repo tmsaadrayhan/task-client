@@ -1,7 +1,10 @@
 const CreateProject = () => {
+  const handleValue = (event) => {
+    console.log(event.target.value);
+  };
   return (
     <div className="w-full p-[2rem]">
-      <h1 className="text-4xl text-[#8B5CF6] font-[600]">Project List</h1>
+      <h1 className="text-4xl text-[#8B5CF6] font-[600]">Create Project</h1>
       <hr className="solid mt-[1rem]"></hr>
       <form className="rounded-lg shadow-lg mt-[1rem]">
         <div className="grid grid-cols-3 gap-[1rem] w-full p-[2rem]">
@@ -69,7 +72,25 @@ const CreateProject = () => {
               <option>20</option>
             </select>
           </div>
+          <div>
+            <p className="text-xl">Progress</p>
+            <input
+              type="range"
+              name="progress"
+              min="0"
+              max="100"
+              step="1"
+              onChange={handleValue}
+              className="w-full h-[2rem]"
+            />
+          </div>
         </div>
+        <button
+          type="submit"
+          className="bg-[#8B5CF6] ms-[2rem] mb-[2rem] py-[.5rem] px-[1rem] rounded-md text-[#FFFFFF]"
+        >
+          Submit
+        </button>
       </form>
     </div>
   );
