@@ -15,7 +15,7 @@ import EditProject from "./Pages/EditProject/EditProject.jsx";
 import ProjectView from "./Pages/ProjectView/ProjectView.jsx";
 import Tasks from "./Pages/Tasks/Tasks.jsx";
 import CreateTask from "./Pages/CreateTask/CreateTask.jsx";
-import EditTask from "./EditTask/EditTask.jsx";
+import EditTask from "./Pages/EditTask/EditTask.jsx";
 
 const router = createBrowserRouter([
   {
