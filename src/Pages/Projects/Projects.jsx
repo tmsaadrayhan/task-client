@@ -5,8 +5,19 @@ import notstarted from "../../assets/project/notstarted.svg";
 import kanban from "../../assets/project/kanban.svg";
 import { FiPlusCircle } from "react-icons/fi";
 import { IoIosSearch } from "react-icons/io";
+import { IoEyeOutline } from "react-icons/io5";
+import { FiEdit } from "react-icons/fi";
+import { MdOutlineCancel } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const Projects = () => {
+  const status = (
+    <>
+      <div className="py-[.2rem] px-[.4rem] text-[#FFFFFF] bg-[#8B5CF6] rounded-md">
+        In progress
+      </div>
+    </>
+  );
   return (
     <div className="p-[2rem] w-full">
       <h1 className="text-4xl text-[#8B5CF6] font-[600]">Project List</h1>
@@ -27,7 +38,7 @@ const Projects = () => {
           <div>
             <img src={inprogress} alt="" />
           </div>
-          <div className="w-full flex justify-center">
+          <div className="w-full justify-center">
             <div>
               <p>In progress</p>
               <p className="text-3xl font-[600] text-[#8B5CF6]">50</p>
@@ -63,9 +74,11 @@ const Projects = () => {
             <img className="me-[.2rem]" src={kanban} alt="Kanban Image" />
             Kanban View
           </button>
-          <button className="flex items-center text-[#FFFFFF] bg-[#8B5CF6] rounded-md px-[.5rem] py-[.25rem]">
-            <FiPlusCircle className="pe-[.25rem]" /> Create
-          </button>
+          <Link to="/create-project">
+            <button className="flex items-center text-[#FFFFFF] bg-[#8B5CF6] rounded-md px-[.5rem] py-[.25rem]">
+              <FiPlusCircle className="pe-[.25rem]" /> Create
+            </button>
+          </Link>
         </div>
         <hr className="solid mt-[1rem]"></hr>
         <div className="flex items-center w-full mt-[1rem]">
@@ -80,6 +93,75 @@ const Projects = () => {
               className="z-[0] border ps-[2rem] p-[.2rem] bg-[#E8DEFD] rounded-md"
               placeholder="Search..."
             />
+          </div>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="table w-full my-[1rem]">
+            {/* head */}
+            <thead className="bg-[#E8DEFD]">
+              <tr>
+                <th className="px-[1rem]"></th>
+                <th className="px-[1rem]">Project</th>
+                <th className="px-[1rem]">Client</th>
+                <th className="px-[1rem]">Start Date</th>
+                <th className="px-[1rem]">Finish Date</th>
+                <th className="px-[1rem]">States</th>
+                <th className="px-[1rem]">Assigned</th>
+                <th className="px-[1rem]">Progress</th>
+                <th className="px-[1rem]">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {/* row 1 */}
+              <tr>
+                <th>
+                  <label>
+                    <input type="checkbox" className="checkbox" />
+                  </label>
+                </th>
+                <td>
+                  <div className="flex items-center gap-3">
+                    <div>
+                      <div className="font-bold">Project Title Here</div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div className="mx-auto w-fit">Client Name</div>
+                </td>
+                <td>
+                  <div className="mx-auto w-fit">2024-03-14</div>
+                </td>
+                <td>
+                  <div className="mx-auto w-fit">2024-03-14</div>
+                </td>
+                <td>{status}</td>
+                <td>
+                  <div className="mx-auto w-fit">x, y, z</div>
+                </td>
+                <td>
+                  <div className="mx-auto w-fit">0%</div>
+                </td>
+                <td>
+                  <div className="flex justify-center items-center">
+                    <IoEyeOutline className="text-2xl m-[.2rem]" />
+                    <FiEdit className="text-2xl m-[.2rem] text-[#8B5CF6]" />
+                    <MdOutlineCancel className="text-2xl m-[.2rem] text-[#FB0000]" />
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div className="flex w-full">
+          <div className="text-nowrap">Showing 0 to 0 of 0 entries</div>
+          <div className="w-full flex  justify-end">
+            <button className="text-[#8B5CF6] border border-[#8B5CF6] px-[.2rem] rounded-md me-[1rem]">
+              {"< "}Previous
+            </button>
+            <button className="text-[#8B5CF6] border border-[#8B5CF6] px-[.2rem] rounded-md">
+              Next{" >"}
+            </button>
           </div>
         </div>
       </div>
