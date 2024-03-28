@@ -1,23 +1,4 @@
-import cancelled from "../../assets/project/cancelled.svg";
-import completed from "../../assets/project/completed.svg";
-import inprogress from "../../assets/project/inprogress.svg";
-import notstarted from "../../assets/project/notstarted.svg";
-import kanban from "../../assets/project/kanban.svg";
-import { FiPlusCircle } from "react-icons/fi";
-import { IoIosSearch } from "react-icons/io";
-import { IoEyeOutline } from "react-icons/io5";
-import { FiEdit } from "react-icons/fi";
-import { MdOutlineCancel } from "react-icons/md";
-import { Link } from "react-router-dom";
-
-const Projects = () => {
-  const status = (
-    <>
-      <div className="py-[.2rem] px-[.4rem] text-[#FFFFFF] bg-[#8B5CF6] rounded-md">
-        In progress
-      </div>
-    </>
-  );
+const ProjectView = () => {
   return (
     <div className="p-[2rem] w-full">
       <h1 className="text-4xl text-[#8B5CF6] font-[600]">Project List</h1>
@@ -169,4 +150,4 @@ const Projects = () => {
   );
 };
 
-export default Projects;
+export default ProjectView;

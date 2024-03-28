@@ -11,6 +11,7 @@ import Dashboard from "./Pages/Dashboard/Dashboard.jsx";
 import Projects from "./Pages/Projects/Projects.jsx";
 import ResetPassword from "./Pages/ResetPssword/ResetPassword.jsx";
 import CreateProject from "./Pages/CreatProject/CreateProject.jsx";
+import EditProject from "./Pages/EditProject/EditProject.jsx";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,14 @@ const router = createBrowserRouter([
       {
         path: "/create-project",
         element: <CreateProject></CreateProject>,
+      },
+      {
+        path: "/edit-project",
+        element: <EditProject></EditProject>,
+      },
+      {
+        path: "/project-view",
+        element: <EditProject></EditProject>,
       },
     ],
   },
