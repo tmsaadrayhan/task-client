@@ -29,7 +29,15 @@ const Login = () => {
         body: JSON.stringify(formData)
       });
       if (response.ok) {
+        const data = await response.json();
+        const token = data.token; // Assuming the token is returned as 'token' in the response
+        
+        // Store the token in local storage
+        localStorage.setItem('accessToken', token);
+        
+        // Show success toast
         toast.success("Login successful");
+        
         // Optionally redirect the user to another page upon successful login
       } else {
         console.error("Login failed");
@@ -39,6 +47,7 @@ const Login = () => {
       console.error("Error occurred during login:", error);
     }
   };
+  
 
   return (
     <div className="login_bg flex justify-center items-center h-screen mx-auto">

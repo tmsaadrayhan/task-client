@@ -10,6 +10,7 @@ import { FiEdit } from "react-icons/fi";
 import { MdOutlineCancel } from "react-icons/md";
 import { Link } from "react-router-dom";
 
+
 const Projects = () => {
   const status = (
     <>
@@ -102,7 +103,7 @@ const Projects = () => {
               <tr>
                 <th className="px-[1rem]"></th>
                 <th className="px-[1rem]">Project</th>
-                <th className="px-[1rem]">Client</th>
+                
                 <th className="px-[1rem]">Start Date</th>
                 <th className="px-[1rem]">Finish Date</th>
                 <th className="px-[1rem]">States</th>
@@ -126,9 +127,7 @@ const Projects = () => {
                     </div>
                   </div>
                 </td>
-                <td>
-                  <div className="mx-auto w-fit">Client Name</div>
-                </td>
+               
                 <td>
                   <div className="mx-auto w-fit">2024-03-14</div>
                 </td>
