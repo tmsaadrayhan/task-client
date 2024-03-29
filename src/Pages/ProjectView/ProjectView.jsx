@@ -10,7 +10,7 @@ import { FiEdit } from "react-icons/fi";
 import { MdOutlineCancel } from "react-icons/md";
 import { Link } from "react-router-dom";
 
-const Projects = () => {
+const ProjectView = () => {
   const status = (
     <>
       <div className="py-[.2rem] px-[.4rem] text-[#FFFFFF] bg-[#8B5CF6] rounded-md">
@@ -20,8 +20,9 @@ const Projects = () => {
   );
   return (
     <div className="p-[2rem] w-full">
-      <h1 className="text-4xl text-[#8B5CF6] font-[600]">Project List</h1>
+      <h1 className="text-4xl text-[#8B5CF6] font-[600]">Project View</h1>
       <hr className="solid mt-[1rem]"></hr>
+      <h1 className="text-3xl font-[600]">Task List</h1>
       <div className="grid grid-cols-4 gap-4 w-full mt-[2rem]">
         <div className="shadow-[0_5px_15px_0px_rgba(0,0,0,0.3)] rounded-xl flex items-center p-[1rem]">
           <div>
@@ -101,13 +102,12 @@ const Projects = () => {
             <thead className="bg-[#E8DEFD]">
               <tr>
                 <th className="px-[1rem] mx-auto"></th>
+                <th className="px-[1rem] mx-auto">Task</th>
                 <th className="px-[1rem] mx-auto">Project</th>
-                <th className="px-[1rem] mx-auto">Client</th>
                 <th className="px-[1rem] mx-auto">Start Date</th>
                 <th className="px-[1rem] mx-auto">Finish Date</th>
                 <th className="px-[1rem] mx-auto">States</th>
                 <th className="px-[1rem] mx-auto">Assigned</th>
-                <th className="px-[1rem] mx-auto">Progress</th>
                 <th className="px-[1rem] mx-auto">Action</th>
               </tr>
             </thead>
@@ -120,10 +120,14 @@ const Projects = () => {
                   </label>
                 </th>
                 <td>
-                  <div className="font-bold">Project Title Here</div>
+                  <div className="flex items-center gap-3">
+                    <div>
+                      <div className="font-bold">Task Title Here</div>
+                    </div>
+                  </div>
                 </td>
                 <td>
-                  <div className="mx-auto w-fit">Client Name</div>
+                  <div className="mx-auto w-fit">Project Title</div>
                 </td>
                 <td>
                   <div className="mx-auto w-fit">2024-03-14</div>
@@ -134,9 +138,6 @@ const Projects = () => {
                 <td>{status}</td>
                 <td>
                   <div className="mx-auto w-fit">x, y, z</div>
-                </td>
-                <td>
-                  <div className="mx-auto w-fit">0%</div>
                 </td>
                 <td>
                   <div className="flex justify-center items-center">
@@ -165,4 +166,4 @@ const Projects = () => {
   );
 };
 
-export default Projects;
+export default ProjectView;
