@@ -26,7 +26,7 @@ const CreateProject = () => {
   };
 
   const getTokenFromLocalStorage = () => {
-    return localStorage.getItem('accessToken'); 
+    return localStorage.getItem('accessToken');  
   };
   
   const handleSubmit = async (event) => {
