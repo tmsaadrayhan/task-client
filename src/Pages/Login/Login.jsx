@@ -30,7 +30,7 @@ const Login = () => {
       });
       if (response.ok) {
         const data = await response.json();
-        const token = data.token; // Assuming the token is returned as 'token' in the response
+        const token = data.token; //  the token is returned as 'token' in the response
         
         // Store the token in local storage
         localStorage.setItem('accessToken', token);

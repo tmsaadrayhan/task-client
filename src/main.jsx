@@ -75,7 +75,6 @@ const router = createBrowserRouter([
         path: "/edit-tasks",
         element: <EditTask></EditTask>,
       },
-
     ],
   },
 ]);
