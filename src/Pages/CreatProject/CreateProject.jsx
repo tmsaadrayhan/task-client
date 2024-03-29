@@ -26,41 +26,41 @@ const CreateProject = () => {
   };
 
   const getTokenFromLocalStorage = () => {
-    return localStorage.getItem('accessToken'); // Assuming you store the token with the key 'accessToken'
+    return localStorage.getItem('accessToken');  
   };
   
   const handleSubmit = async (event) => {
-    event.preventDefault();
-  
-    try {
-      const token = getTokenFromLocalStorage(); // Retrieve token from local storage
-  
-      const response = await fetch("http://localhost:5000/projects", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-access-token": token // Include the JWT token in the request headers
-        },
-        body: JSON.stringify({
-          title: formData.title, // Include project title
-          startDate: formData.startDate, // Include project start date
-          finishDate: formData.finishDate, // Include project finish date
-          assignedEmployees: [formData.assignedEmployee], // Include assigned employee
-          priority: formData.priority, // Include project priority
-          progress: formData.progress, // Include project progress
-        })
-      });
-  
-      if (!response.ok) {
-        throw new Error("Failed to create project");
-      }
-  
-      // Handle successful response
-    } catch (error) {
-      console.error("Failed to create project:", error);
+  event.preventDefault();
+
+  try {
+    const token = getTokenFromLocalStorage(); // Retrieve token from local storage
+
+    const response = await fetch("http://localhost:5000/projects", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": token // Include the JWT token in the request headers
+      },
+      body: JSON.stringify({
+        title: formData.title, // Include project title
+        startDate: formData.startDate, // Include project start date
+        finishDate: formData.finishDate, // Include project finish date
+        assignedEmployees: [formData.assignedEmployee], // Include assigned employee
+        priority: formData.priority, // Include project priority
+        progress: formData.progress, // Include project progress
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to create project");
     }
-  };
-  
+
+    // Handle successful response
+  } catch (error) {
+    console.error("Failed to create project:", error);
+  }
+};
+
   return (
     <div className="w-full p-[2rem]">
       <h1 className="text-4xl text-[#8B5CF6] font-[600]">Create Project</h1>
