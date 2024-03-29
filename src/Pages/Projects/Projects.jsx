@@ -18,6 +18,38 @@ const Projects = () => {
       </div>
     </>
   );
+  const [projects, setProjects] = useState([]);
+  useEffect(() => {
+    fetch(
+      "http://localhost:5000/projects",
+      {
+        method: "GET",
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
+  }, []);
+  // const handleDelete = (id, title) => {
+  //   const proceed = confirm(`Are you sure you want to cancel "${title}"?`);
+  //   if (proceed) {
+  //     fetch(`https://car-doctor-server-p2jz.onrender.com/bookings/${id}`, {
+  //       method: "DELETE",
+  //     })
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         console.log(data);
+  //         if (data.deletedCount > 0) {
+  //           alert("Deleted successfully");
+  //           setBookings(bookings.filter((booking) => booking._id !== id));
+  //         }
+  //       });
+  //   }
+  // };
   return (
     <div className="p-[2rem] w-full">
       <h1 className="text-4xl text-[#8B5CF6] font-[600]">Project List</h1>

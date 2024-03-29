@@ -16,6 +16,7 @@ import ProjectView from "./Pages/ProjectView/ProjectView.jsx";
 import Tasks from "./Pages/Tasks/Tasks.jsx";
 import CreateTask from "./Pages/CreateTask/CreateTask.jsx";
 import EditTask from "./Pages/EditTask/EditTask.jsx";
+import Overview from "./Pages/Overview/Overview.jsx";
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Dashboard></Dashboard>,
+      },
+      {
+        path: "/overview",
+        element: <Overview></Overview>,
       },
       {
         path: "/projects",

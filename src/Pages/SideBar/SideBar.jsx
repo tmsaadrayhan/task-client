@@ -21,77 +21,77 @@ const SideBar = () => {
           <p>Dashboard</p>
         </div>
       </Link>
-      <hr class="solid"></hr>
-      <Link>
+      <hr className="solid"></hr>
+      <Link to="/overview">
         <div className="my-[1rem]">
           <img className="mx-auto" src={overview} alt="" />
           <p>Overview</p>
         </div>
       </Link>
-      <hr class="solid"></hr>
+      <hr className="solid"></hr>
       <Link to="/projects">
         <div className="my-[1rem]">
           <img className="mx-auto" src={projects} alt="" />
           <p>Projects</p>
         </div>
       </Link>
-      <hr class="solid"></hr>
+      <hr className="solid"></hr>
       <Link>
         <div className="my-[1rem]">
           <img className="mx-auto" src={tasks} alt="" />
           <p>Tasks</p>
         </div>
       </Link>
-      <hr class="solid"></hr>
+      <hr className="solid"></hr>
       <Link>
         <div className="my-[1rem]">
           <img className="mx-auto" src={hrm} alt="" />
           <p>HRM</p>
         </div>
       </Link>
-      <hr class="solid"></hr>
+      <hr className="solid"></hr>
       <Link>
         <div className="my-[1rem]">
           <img className="mx-auto" src={employee} alt="" />
           <p>Employee</p>
         </div>
       </Link>
-      <hr class="solid"></hr>
+      <hr className="solid"></hr>
       <Link>
         <div className="my-[1rem]">
           <img className="mx-auto" src={attendance} alt="" />
           <p>Attendance</p>
         </div>
       </Link>
-      <hr class="solid"></hr>
+      <hr className="solid"></hr>
       <Link>
         <div className="my-[1rem]">
           <img className="mx-auto" src={accounting} alt="" />
           <p>Accounting</p>
         </div>
       </Link>
-      <hr class="solid"></hr>
+      <hr className="solid"></hr>
       <Link>
         <div className="my-[1rem]">
           <img className="mx-auto" src={leave} alt="" />
           <p>Leave request</p>
         </div>
       </Link>
-      <hr class="solid"></hr>
+      <hr className="solid"></hr>
       <Link>
         <div className="my-[1rem]">
           <img className="mx-auto" src={training} alt="" />
           <p>Training</p>
         </div>
       </Link>
-      <hr class="solid"></hr>
+      <hr className="solid"></hr>
       <Link>
         <div className="my-[1rem]">
           <img className="mx-auto" src={report} alt="" />
           <p>Reports</p>
         </div>
       </Link>
-      <hr class="solid"></hr>
+      <hr className="solid"></hr>
     </div>
   );
 };
