@@ -5,35 +5,40 @@ import notstarted from "../../assets/project/notstarted.svg";
 import kanban from "../../assets/project/kanban.svg";
 import { FiPlusCircle } from "react-icons/fi";
 import { IoIosSearch } from "react-icons/io";
-import { IoEyeOutline } from "react-icons/io5";
-import { FiEdit } from "react-icons/fi";
-import { MdOutlineCancel } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import Project from "../Project/Project";
 
 const Projects = () => {
-  const status = (
-    <>
-      <div className="py-[.2rem] px-[.4rem] text-[#FFFFFF] bg-[#8B5CF6] rounded-md">
-        In progress
-      </div>
-    </>
-  );
   const [projects, setProjects] = useState([]);
   useEffect(() => {
-    fetch(
-      "http://localhost:5000/projects",
-      {
-        method: "GET",
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      }
-    )
+    fetch("http://localhost:5000/projects", {
+      method: "GET",
+      headers: {
+        "x-access-token": localStorage.getItem("accessToken"),
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setProjects(data);
+      });
+  }, []);
+  const deleteProject = (id) => {
+    fetch(`http://localhost:5000/projects/${id}`, {
+      method: "DELETE",
+      headers: {
+        "x-access-token": localStorage.getItem("accessToken"),
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        if (data.message === "Project deleted successfully") {
+          setProjects(projects.filter((project) => project._id !== id));
+        }
       });
-  }, []);
+  };
+  console.log(projects);
   // const handleDelete = (id, title) => {
   //   const proceed = confirm(`Are you sure you want to cancel "${title}"?`);
   //   if (proceed) {
@@ -134,50 +139,23 @@ const Projects = () => {
               <tr>
                 <th className="px-[1rem] mx-auto"></th>
                 <th className="px-[1rem] mx-auto">Project</th>
-                <th className="px-[1rem] mx-auto">Client</th>
                 <th className="px-[1rem] mx-auto">Start Date</th>
                 <th className="px-[1rem] mx-auto">Finish Date</th>
-                <th className="px-[1rem] mx-auto">States</th>
+                <th className="px-[1rem] mx-auto">Summary</th>
+                <th className="px-[1rem] mx-auto">Priority</th>
                 <th className="px-[1rem] mx-auto">Assigned</th>
                 <th className="px-[1rem] mx-auto">Progress</th>
                 <th className="px-[1rem] mx-auto">Action</th>
               </tr>
             </thead>
             <tbody>
-              {/* row 1 */}
-              <tr>
-                <th>
-                  <label>
-                    <input type="checkbox" className="checkbox" />
-                  </label>
-                </th>
-                <td>
-                  <div className="font-bold">Project Title Here</div>
-                </td>
-                <td>
-                  <div className="mx-auto w-fit">Client Name</div>
-                </td>
-                <td>
-                  <div className="mx-auto w-fit">2024-03-14</div>
-                </td>
-                <td>
-                  <div className="mx-auto w-fit">2024-03-14</div>
-                </td>
-                <td>{status}</td>
-                <td>
-                  <div className="mx-auto w-fit">x, y, z</div>
-                </td>
-                <td>
-                  <div className="mx-auto w-fit">0%</div>
-                </td>
-                <td>
-                  <div className="flex justify-center items-center">
-                    <IoEyeOutline className="text-2xl m-[.2rem]" />
-                    <FiEdit className="text-2xl m-[.2rem] text-[#8B5CF6]" />
-                    <MdOutlineCancel className="text-2xl m-[.2rem] text-[#FB0000]" />
-                  </div>
-                </td>
-              </tr>
+              {projects.map((project) => (
+                <Project
+                  key={project._id}
+                  deleteProject={deleteProject}
+                  project={project}
+                ></Project>
+              ))}
             </tbody>
           </table>
         </div>

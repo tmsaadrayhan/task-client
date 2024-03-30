@@ -52,15 +52,21 @@ const router = createBrowserRouter([
         element: <Projects></Projects>,
       },
       {
-        // Create Project 
+        // Create Project
         path: "/create-project",
         element: <CreateProject></CreateProject>,
       },
-      
+
       {
         // Edit Project
-        path: "/edit-project",
+        path: "/edit-project/:id",
         element: <EditProject></EditProject>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/projects/${params.id}`, {
+            headers: {
+              "x-access-token": localStorage.getItem("accessToken"),
+            },
+          }),
       },
       {
         path: "/project-view",

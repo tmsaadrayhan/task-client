@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import accounting from "../../assets/sidebar/accounting.svg";
 import attendance from "../../assets/sidebar/attendance.svg";
-import company from "../../assets/sidebar/company.svg";
 import dashboard from "../../assets/sidebar/dashboard.svg";
 import employee from "../../assets/sidebar/employee.svg";
 import hrm from "../../assets/sidebar/hrm.svg";
@@ -15,7 +14,7 @@ import training from "../../assets/sidebar/training.svg";
 const SideBar = () => {
   return (
     <div className="text-center shadow-[0_20px_20px_0px_rgba(0,0,0,0.3)]">
-      <Link>
+      <Link to="/">
         <div className="my-[1rem]">
           <img className="mx-auto" src={dashboard} alt="" />
           <p>Dashboard</p>

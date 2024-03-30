@@ -1,20 +1,60 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const CreateProject = () => {
   const [formData, setFormData] = useState({
     title: "",
     startDate: "",
     finishDate: "",
-    assignedEmployee: "employeeId2", // Default value
-    priority: "Medium", // Default value
+    assignedEmployees: [],
+    priority: "Medium",
     progress: 0,
   });
+
+  const [users, setUsers] = useState([]);
+
+  // Fetch users from the server
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        // Retrieve token from local storage
+        const response = await fetch("http://localhost:5000/users", {
+          headers: {
+            "x-access-token": localStorage.getItem("accessToken"),
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setUsers(data);
+        } else {
+          console.error("Failed to fetch users");
+        }
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+    fetchUsers();
+  }, []);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({
       ...formData,
       [name]: value,
+    });
+  };
+
+  const handleAssignedEmployeesChange = (event) => {
+    const { options } = event.target;
+    const selectedEmployees = Array.from(options)
+      .filter((option) => option.selected)
+      .map((option) => option.value);
+
+    setFormData({
+      ...formData,
+      assignedEmployees: selectedEmployees,
     });
   };
 
@@ -25,128 +65,183 @@ const CreateProject = () => {
     });
   };
 
-  const getTokenFromLocalStorage = () => {
-    return localStorage.getItem('accessToken');  
-  };
-  
   const handleSubmit = async (event) => {
-  event.preventDefault();
+    event.preventDefault();
 
-  try {
-    const token = getTokenFromLocalStorage(); // Retrieve token from local storage
+    try {
+      // Retrieve token from local storage
 
-    const response = await fetch("http://localhost:5000/projects", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-access-token": token // Include the JWT token in the request headers
-      },
-      body: JSON.stringify({
-        title: formData.title, // Include project title
-        startDate: formData.startDate, // Include project start date
-        finishDate: formData.finishDate, // Include project finish date
-        assignedEmployees: [formData.assignedEmployee], // Include assigned employee
-        priority: formData.priority, // Include project priority
-        progress: formData.progress, // Include project progress
-      })
-    });
+      const response = await fetch("http://localhost:5000/projects", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-access-token": localStorage.getItem("accessToken"),
+        },
+        body: JSON.stringify(formData),
+      });
 
-    if (!response.ok) {
-      throw new Error("Failed to create project");
+      if (!response.ok) {
+        throw new Error("Failed to create project");
+      }
+
+      // Handle successful response
+      toast.success("Project created successfully");
+    } catch (error) {
+      console.error("Failed to create project:", error);
     }
-
-    // Handle successful response
-  } catch (error) {
-    console.error("Failed to create project:", error);
-  }
-};
+  };
 
   return (
     <div className="w-full p-[2rem]">
       <h1 className="text-4xl text-[#8B5CF6] font-[600]">Create Project</h1>
       <hr className="solid mt-[1rem]" />
       <form className="rounded-lg shadow-lg mt-[1rem]" onSubmit={handleSubmit}>
-        <div className="grid grid-cols-3 gap-[1rem] w-full p-[2rem]">
+        <div className="grid grid-cols-2 gap-4 p-[2rem]">
+          {/* Project Title */}
           <div>
-            <p className="text-xl">Project title</p>
+            <label
+              htmlFor="title"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Project Title
+            </label>
             <input
-              className="border rounded-md w-full bg-[#F8F9FA] p-[.4rem]"
               type="text"
-              placeholder="Enter title"
               name="title"
+              id="title"
+              autoComplete="off"
               value={formData.title}
               onChange={handleInputChange}
+              className="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              required
             />
           </div>
+
+          {/* Start Date */}
           <div>
-            <p className="text-xl">Start date</p>
+            <label
+              htmlFor="startDate"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Start Date
+            </label>
             <input
-              className="border rounded-md w-full bg-[#F8F9FA] p-[.4rem]"
               type="date"
-              placeholder="Enter start date"
               name="startDate"
+              id="startDate"
               value={formData.startDate}
               onChange={handleInputChange}
+              className="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              required
             />
           </div>
+
+          {/* Finish Date */}
           <div>
-            <p className="text-xl">Finish date</p>
+            <label
+              htmlFor="finishDate"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Finish Date
+            </label>
             <input
-              className="border rounded-md w-full bg-[#F8F9FA] p-[.4rem]"
               type="date"
-              placeholder="Enter finish date"
               name="finishDate"
+              id="finishDate"
               value={formData.finishDate}
               onChange={handleInputChange}
+              className="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              required
             />
           </div>
+          {/* Priority */}
           <div>
-            <p className="text-xl">Assigned Employee</p>
-            <select
-              className="border rounded-md bg-[#F8F9FA] p-[.4rem] w-full"
-              name="assignedEmployee"
-              value={formData.assignedEmployee}
-              onChange={handleInputChange}
+            <label
+              htmlFor="priority"
+              className="block text-sm font-medium text-gray-700"
             >
-              <option value="employeeId1">Employee 1</option>
-              <option value="employeeId2">Employee 2</option>
-              <option value="employeeId3">Employee 3</option>
-            </select>
-          </div>
-          <div>
-            <p className="text-xl">Priority</p>
+              Priority
+            </label>
             <select
-              className="border rounded-md bg-[#F8F9FA] p-[.4rem] w-full"
+              id="priority"
               name="priority"
               value={formData.priority}
               onChange={handleInputChange}
+              className="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             >
               <option value="Low">Low</option>
               <option value="Medium">Medium</option>
               <option value="High">High</option>
             </select>
           </div>
+          {/* Assigned Employees */}
           <div>
-            <p className="text-xl">Progress</p>
+            <label
+              htmlFor="assignedEmployees"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Assigned Employees
+            </label>
+            <select
+              id="assignedEmployees"
+              name="assignedEmployees"
+              multiple
+              value={formData.assignedEmployees}
+              onChange={handleAssignedEmployeesChange}
+              className="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            >
+              {users.map((user) => (
+                <option key={user._id} value={user._id}>
+                  {user.email}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Summary */}
+          <div>
+            <label htmlFor="summary">Summary:</label>
+            <textarea
+              id="summary"
+              name="summary"
+              value={formData.summary}
+              onChange={handleInputChange}
+              className="w-full p-2 border rounded"
+              rows="4"
+            />
+          </div>
+          {/* Progress */}
+          <div>
+            <label
+              htmlFor="progress"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Progress
+            </label>
             <input
               type="range"
               name="progress"
+              id="progress"
               min="0"
               max="100"
-              step="1"
               value={formData.progress}
               onChange={handleRangeChange}
-              className="w-full h-[2rem]"
+              className="mt-1 p-2 block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             />
           </div>
+
+          {/* Submit Button */}
+          <div className="col-span-2">
+            <button
+              type="submit"
+              className="bg-[#8B5CF6] hover:bg-[#7c4dff] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            >
+              Create Project
+            </button>
+          </div>
         </div>
-        <button
-          type="submit"
-          className="bg-[#8B5CF6] ms-[2rem] mb-[2rem] py-[.5rem] px-[1rem] rounded-md text-[#FFFFFF]"
-        >
-          Submit
-        </button>
       </form>
+      <ToastContainer position="bottom-right" autoClose={3000} />
     </div>
   );
 };
