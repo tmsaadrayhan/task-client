@@ -82,24 +82,13 @@ const CreateTask = () => {
       assignedEmployees: selectedEmployees,
     });
   };
-  const handleAssignedEmployeesChange = (event) => {
-    const { options } = event.target;
-    const selectedEmployees = Array.from(options)
-      .filter((option) => option.selected)
-      .map((option) => option.value);
-
-    setFormData({
-      ...formData,
-      assignedEmployees: selectedEmployees,
-    });
-  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
       // Retrieve token from local storage
-
+      console.log(formData);
       const response = await fetch("http://localhost:5000/tasks", {
         method: "POST",
         headers: {
@@ -210,7 +199,7 @@ const CreateTask = () => {
             ></label>
             <select
               id="projects"
-              name="projectsId"
+              name="projectId"
               value={formData.projects}
               onChange={handleInputChange}
               className="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"

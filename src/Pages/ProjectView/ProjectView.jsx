@@ -11,6 +11,7 @@ import { MdOutlineCancel } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 const ProjectView = () => {
+   Project
   const status = (
     <>
       <div className="py-[.2rem] px-[.4rem] text-[#FFFFFF] bg-[#8B5CF6] rounded-md">
