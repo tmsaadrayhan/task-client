@@ -17,6 +17,12 @@ import Tasks from "./Pages/Tasks/Tasks.jsx";
 import CreateTask from "./Pages/CreateTask/CreateTask.jsx";
 import EditTask from "./Pages/EditTask/EditTask.jsx";
 import Overview from "./Pages/Overview/Overview.jsx";
+import CreateDepartment from "./Pages/CreateDepartment/CreateDepartment.jsx";
+import Departments from "./Pages/Departments/Departments.jsx";
+import EditDepartment from "./Pages/EditDepartment/EditDepartment.jsx";
+import CreateDesignation from "./Pages/CreateDesignation/CreateDesignation.jsx";
+import Designations from "./Pages/Designations/Designations.jsx";
+import EditDesignation from "./Pages/EditDesignation/EditDesignation.jsx";
 
 const router = createBrowserRouter([
   {
@@ -83,10 +89,58 @@ const router = createBrowserRouter([
       },
       {
         // Edit Task
-        path: "/edit-tasks",
+        path: "/edit-task/:id",
         element: <EditTask></EditTask>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/tasks/${params.id}`, {
+            headers: {
+              "x-access-token": localStorage.getItem("accessToken"),
+            },
+          }),
       },
-    ],
+      {
+        // Create Department
+        path: "/create-department",
+        element: <CreateDepartment></CreateDepartment>,
+      },
+      {
+        path: "/departments",
+        element: <Departments></Departments>,
+      },
+      {
+        // Edit Department
+        path: "/edit-department/:id",
+        element: <EditDepartment></EditDepartment>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/departments/${params.id}`, {
+            headers: {
+              "x-access-token": localStorage.getItem("accessToken"),
+            },
+          }),
+      },
+      {
+        // Create Designation
+        path: "/create-designation",
+        element: <CreateDesignation></CreateDesignation>,
+      },
+      {
+        path: "/designations",
+        element: <Designations></Designations>,
+      },
+      
+      {
+        // Edit Designation
+        path: "/edit-designation/:id",
+        element: <EditDesignation></EditDesignation>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/designations/${params.id}`, {
+            headers: {
+              "x-access-token": localStorage.getItem("accessToken"),
+            },
+          }),
+      },
+    ]
+    
   },
 ]);
 

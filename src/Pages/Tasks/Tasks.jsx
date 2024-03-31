@@ -5,19 +5,41 @@ import notstarted from "../../assets/project/notstarted.svg";
 import kanban from "../../assets/project/kanban.svg";
 import { FiPlusCircle } from "react-icons/fi";
 import { IoIosSearch } from "react-icons/io";
-import { IoEyeOutline } from "react-icons/io5";
-import { FiEdit } from "react-icons/fi";
-import { MdOutlineCancel } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import Task from "../Task/Task";
 
 const Tasks = () => {
-  const status = (
-    <>
-      <div className="py-[.2rem] px-[.4rem] text-[#FFFFFF] bg-[#8B5CF6] rounded-md">
-        In progress
-      </div>
-    </>
-  );
+  const [tasks, setTasks] = useState([]);
+  useEffect(() => {
+    fetch("http://localhost:5000/tasks", {
+      method: "GET",
+      headers: {
+        "x-access-token": localStorage.getItem("accessToken"),
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setTasks(data);
+      });
+  }, []);
+  const deleteTask = (id) => {
+    fetch(`http://localhost:5000/tasks/${id}`, {
+      method: "DELETE",
+      headers: {
+        "x-access-token": localStorage.getItem("accessToken"),
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.message === "Task deleted successfully") {
+          setTasks(tasks.filter((task) => task._id !== id));
+        }
+      });
+  };
+  console.log(tasks);
+  
   return (
     <div className="p-[2rem] w-full">
       <h1 className="text-4xl text-[#8B5CF6] font-[600]">Task List</h1>
@@ -111,37 +133,8 @@ const Tasks = () => {
               </tr>
             </thead>
             <tbody>
+              {tasks.map(task=><Task key={task._id} task={task} deleteTask={deleteTask}></Task>)}
               {/* row 1 */}
-              <tr>
-                <th>
-                  <label>
-                    <input type="checkbox" className="checkbox" />
-                  </label>
-                </th>
-                <td>
-                  <div className="font-bold">Task Title Here</div>
-                </td>
-                <td>
-                  <div className="mx-auto w-fit">Project Task</div>
-                </td>
-                <td>
-                  <div className="mx-auto w-fit">2024-03-14</div>
-                </td>
-                <td>
-                  <div className="mx-auto w-fit">2024-03-14</div>
-                </td>
-                <td>{status}</td>
-                <td>
-                  <div className="mx-auto w-fit">x, y, z</div>
-                </td>
-                <td>
-                  <div className="flex justify-center items-center">
-                    <IoEyeOutline className="text-2xl m-[.2rem]" />
-                    <FiEdit className="text-2xl m-[.2rem] text-[#8B5CF6]" />
-                    <MdOutlineCancel className="text-2xl m-[.2rem] text-[#FB0000]" />
-                  </div>
-                </td>
-              </tr>
             </tbody>
           </table>
         </div>
