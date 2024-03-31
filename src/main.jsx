@@ -23,6 +23,7 @@ import EditDepartment from "./Pages/EditDepartment/EditDepartment.jsx";
 import CreateDesignation from "./Pages/CreateDesignation/CreateDesignation.jsx";
 import Designations from "./Pages/Designations/Designations.jsx";
 import EditDesignation from "./Pages/EditDesignation/EditDesignation.jsx";
+import PrivateRoute from "./Provider/PrivateRoute.jsx";
 
 const router = createBrowserRouter([
   {
@@ -43,7 +44,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <Main></Main>,
+    element: <PrivateRoute><Main></Main></PrivateRoute>,
     children: [
       {
         path: "/",
