@@ -4,7 +4,6 @@ import task from "../../assets/dashboard/task.svg";
 import award from "../../assets/dashboard/award.svg";
 import announcements from "../../assets/dashboard/announcements.svg";
 
-
 const Dashboard = () => {
   const status = (
     <>
@@ -13,6 +12,16 @@ const Dashboard = () => {
       </div>
     </>
   );
+  const handlePunchIn = async () => {
+    const response = await fetch("http://localhost:5000/attendance/punch-in", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": localStorage.getItem("accessToken"),
+      },
+    });
+    console.log(response);
+  };
   return (
     <div className="p-[2rem] w-full">
       <h1 className="text-4xl text-[#8B5CF6] font-[600]">Dashboard</h1>
@@ -23,13 +32,21 @@ const Dashboard = () => {
             <div className="w-full flex items-center">
               <p className="text-nowrap">10:15AM - 5:30AM</p>
               <div className="w-full flex justify-end">
-                <button className="flex bg-[#8B5CF6] text-[#FFFFFF] px-[.6rem] py-[.4rem] rounded-full">
+                <button onClick={handlePunchIn} className="flex bg-[#8B5CF6] text-[#FFFFFF] px-[.6rem] py-[.4rem] rounded-full">
                   <img
                     className="me-[.4rem]"
                     src={punchin}
                     alt="Punch In Image"
                   />{" "}
                   Punch In
+                </button>
+                <button className="flex bg-[#8B5CF6] text-[#FFFFFF] px-[.6rem] py-[.4rem] rounded-full">
+                  <img
+                    className="me-[.4rem]"
+                    src={punchin}
+                    alt="Punch In Image"
+                  />{" "}
+                  Punch Out
                 </button>
               </div>
             </div>
