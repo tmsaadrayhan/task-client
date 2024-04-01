@@ -22,6 +22,16 @@ const Dashboard = () => {
     });
     console.log(response);
   };
+  const handlePunchOut = async () => {
+    const response = await fetch("http://localhost:5000/attendance/punch-out", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": localStorage.getItem("accessToken"),
+      },
+    });
+    console.log(response);
+  };
   return (
     <div className="p-[2rem] w-full">
       <h1 className="text-4xl text-[#8B5CF6] font-[600]">Dashboard</h1>
@@ -32,15 +42,21 @@ const Dashboard = () => {
             <div className="w-full flex items-center">
               <p className="text-nowrap">10:15AM - 5:30AM</p>
               <div className="w-full flex justify-end">
-                <button onClick={handlePunchIn} className="flex bg-[#8B5CF6] text-[#FFFFFF] px-[.6rem] py-[.4rem] rounded-full">
+                <button
+                  onClick={() => handlePunchIn()}
+                  className="flex bg-[#8B5CF6] text-[#FFFFFF] px-[.6rem] py-[.4rem] rounded-full me-[1rem]"
+                >
                   <img
                     className="me-[.4rem]"
                     src={punchin}
                     alt="Punch In Image"
-                  />{" "}
+                  />
                   Punch In
                 </button>
-                <button className="flex bg-[#8B5CF6] text-[#FFFFFF] px-[.6rem] py-[.4rem] rounded-full">
+                <button
+                  onClick={() => handlePunchOut()}
+                  className="flex bg-[#FF0000] text-[#FFFFFF] px-[.6rem] py-[.4rem] rounded-full"
+                >
                   <img
                     className="me-[.4rem]"
                     src={punchin}

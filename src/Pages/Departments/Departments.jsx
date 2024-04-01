@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Department from "../Department/Department";
 
 const Departments = () => {
@@ -37,7 +37,7 @@ const Departments = () => {
     <div className="p-[2rem] w-full">
       <h1 className="text-4xl text-[#8B5CF6] font-[600]">Department List</h1>
       <hr className="solid mt-[1rem]"></hr>
-      
+
       <div className="shadow-[0_5px_15px_0px_rgba(0,0,0,0.3)] w-full mt-[3rem] rounded-xl p-[1rem]">
         <div className="overflow-x-auto">
           <table className="table w-full my-[1rem] text-center">

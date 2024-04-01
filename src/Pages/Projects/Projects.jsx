@@ -5,11 +5,12 @@ import notstarted from "../../assets/project/notstarted.svg";
 import kanban from "../../assets/project/kanban.svg";
 import { FiPlusCircle } from "react-icons/fi";
 import { IoIosSearch } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Project from "../Project/Project";
 
 const Projects = () => {
+  const navigate = useNavigate();
   const [projects, setProjects] = useState([]);
   useEffect(() => {
     fetch("http://localhost:5000/projects", {
@@ -38,7 +39,9 @@ const Projects = () => {
         }
       });
   };
-  console.log(projects);
+  if (projects.error === "Invalid token") {
+    navigate("/login");
+  }
   // const handleDelete = (id, title) => {
   //   const proceed = confirm(`Are you sure you want to cancel "${title}"?`);
   //   if (proceed) {

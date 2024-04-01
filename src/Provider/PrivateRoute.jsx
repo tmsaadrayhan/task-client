@@ -1,10 +1,9 @@
-import React, { useContext } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 
 const PrivateRoute = ({ children }) => {
-  const location = useLocation()
-//   if (loading) return <progress className="
-//   progress w-56"></progress>;
+  const location = useLocation();
+  //   if (loading) return <progress className="
+  //   progress w-56"></progress>;
   if (localStorage.getItem("accessToken")) {
     return children;
   }

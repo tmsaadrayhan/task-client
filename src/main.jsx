@@ -24,6 +24,9 @@ import CreateDesignation from "./Pages/CreateDesignation/CreateDesignation.jsx";
 import Designations from "./Pages/Designations/Designations.jsx";
 import EditDesignation from "./Pages/EditDesignation/EditDesignation.jsx";
 import PrivateRoute from "./Provider/PrivateRoute.jsx";
+import Attendances from "./Pages/Attendances/Attendances.jsx";
+import CreateLeave from "./Pages/CreateLeave/CreateLeave.jsx";
+import EditAttendance from "./Pages/EditAttendance/EditAttendance.jsx";
 
 const router = createBrowserRouter([
   {
@@ -44,7 +47,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <PrivateRoute><Main></Main></PrivateRoute>,
+    element: (
+      <PrivateRoute>
+        <Main></Main>
+      </PrivateRoute>
+    ),
     children: [
       {
         path: "/",
@@ -128,7 +135,7 @@ const router = createBrowserRouter([
         path: "/designations",
         element: <Designations></Designations>,
       },
-      
+
       {
         // Edit Designation
         path: "/edit-designation/:id",
@@ -140,8 +147,26 @@ const router = createBrowserRouter([
             },
           }),
       },
-    ]
-    
+      {
+        path: "/attendances",
+        element: <Attendances></Attendances>,
+      },
+      {
+        // Edit Designation
+        path: "/edit-attendance/:id",
+        element: <EditAttendance></EditAttendance>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/attendance/${params.id}`, {
+            headers: {
+              "x-access-token": localStorage.getItem("accessToken"),
+            },
+          }),
+      },
+      {
+        path: "/create-leave",
+        element: <CreateLeave></CreateLeave>,
+      },
+    ],
   },
 ]);
 

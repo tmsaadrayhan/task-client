@@ -1,15 +1,9 @@
 import { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import Designation from "../Designation/Designation";
 
 const EditDesignation = () => {
-    const {
-        _id,
-        title,
-        departmentId,
-    
-      } = useLoaderData();
+  const { _id, title, departmentId } = useLoaderData();
   const [formData, setFormData] = useState({
     title: title,
     departmentId: departmentId,
@@ -64,14 +58,17 @@ const EditDesignation = () => {
     try {
       // Retrieve token from local storage
       console.log(formData);
-      const response = await fetch(`http://localhost:5000/designations/${_id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "x-access-token": localStorage.getItem("accessToken"),
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        `http://localhost:5000/designations/${_id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "x-access-token": localStorage.getItem("accessToken"),
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to create department");

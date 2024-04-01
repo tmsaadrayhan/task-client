@@ -272,7 +272,6 @@ const UpdateProfile = () => {
               <option value="Completed">Completed</option>
             </select>
           </div>
-
           {/* Submit Button */}
           <div className="col-span-2">
             <button

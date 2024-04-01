@@ -3,7 +3,7 @@ import accounting from "../../assets/sidebar/accounting.svg";
 import attendance from "../../assets/sidebar/attendance.svg";
 import dashboard from "../../assets/sidebar/dashboard.svg";
 import employee from "../../assets/sidebar/employee.svg";
-import hrm from "../../assets/sidebar/hrm.svg";
+// import hrm from "../../assets/sidebar/hrm.svg";
 import leave from "../../assets/sidebar/leave.svg";
 import overview from "../../assets/sidebar/overview.svg";
 import projects from "../../assets/sidebar/projects.svg";
@@ -35,20 +35,20 @@ const SideBar = () => {
         </div>
       </Link>
       <hr className="solid"></hr>
-      <Link>
+      <Link to="/tasks">
         <div className="my-[1rem]">
           <img className="mx-auto" src={tasks} alt="" />
           <p>Tasks</p>
         </div>
       </Link>
       <hr className="solid"></hr>
-      <Link>
+      {/* <Link>
         <div className="my-[1rem]">
           <img className="mx-auto" src={hrm} alt="" />
           <p>HRM</p>
         </div>
       </Link>
-      <hr className="solid"></hr>
+      <hr className="solid"></hr> */}
       <Link>
         <div className="my-[1rem]">
           <img className="mx-auto" src={employee} alt="" />
