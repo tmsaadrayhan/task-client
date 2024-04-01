@@ -11,18 +11,63 @@ import Task from "../Task/Task";
 
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);
+  const [admin, setAdmin] = useState(false);
   useEffect(() => {
-    fetch("http://localhost:5000/tasks", {
-      method: "GET",
-      headers: {
-        "x-access-token": localStorage.getItem("accessToken"),
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setTasks(data);
-      });
+    const fetchadmin = async () => {
+      try {
+        // Retrieve token from local storage
+        const response = await fetch(
+          `http://localhost:5000/users/${localStorage.getItem("userId")}`,
+          {
+            headers: {
+              "x-access-token": localStorage.getItem("accessToken"),
+            },
+          }
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data.isAdmin);
+          setAdmin(data.isAdmin);
+        } else {
+          console.error("Failed to fetch users");
+        }
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+    fetchadmin();
   }, []);
+  if (admin) {
+    useEffect(() => {
+      fetch("http://localhost:5000/tasks", {
+        method: "GET",
+        headers: {
+          "x-access-token": localStorage.getItem("accessToken"),
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setTasks(data);
+        });
+    }, []);
+  } else {
+    useEffect(() => {
+      fetch(
+        `http://localhost:5000/tasks/user/${localStorage.getItem("userId")}`,
+        {
+          method: "GET",
+          headers: {
+            "x-access-token": localStorage.getItem("accessToken"),
+          },
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          setTasks(data);
+        });
+    }, []);
+  }
   const deleteTask = (id) => {
     fetch(`http://localhost:5000/tasks/${id}`, {
       method: "DELETE",
@@ -39,7 +84,7 @@ const Tasks = () => {
       });
   };
   console.log(tasks);
-  
+
   return (
     <div className="p-[2rem] w-full">
       <h1 className="text-4xl text-[#8B5CF6] font-[600]">Task List</h1>
@@ -96,11 +141,13 @@ const Tasks = () => {
             <img className="me-[.2rem]" src={kanban} alt="Kanban Image" />
             Kanban View
           </button>
-          <Link to="/create-project">
-            <button className="flex items-center text-[#FFFFFF] bg-[#8B5CF6] rounded-md px-[.5rem] py-[.25rem]">
-              <FiPlusCircle className="pe-[.25rem]" /> Create
-            </button>
-          </Link>
+          {admin && (
+            <Link to="/create-project">
+              <button className="flex items-center text-[#FFFFFF] bg-[#8B5CF6] rounded-md px-[.5rem] py-[.25rem]">
+                <FiPlusCircle className="pe-[.25rem]" /> Create
+              </button>
+            </Link>
+          )}
         </div>
         <hr className="solid mt-[1rem]"></hr>
         <div className="flex items-center w-full mt-[1rem]">
@@ -129,11 +176,18 @@ const Tasks = () => {
                 <th className="px-[1rem]">Finish Date</th>
                 <th className="px-[1rem]">States</th>
                 <th className="px-[1rem]">Assigned</th>
-                <th className="px-[1rem]">Action</th>
+                {admin && <th className="px-[1rem]">Action</th>}
               </tr>
             </thead>
             <tbody>
-              {tasks.map(task=><Task key={task._id} task={task} deleteTask={deleteTask}></Task>)}
+              {tasks.map((task) => (
+                <Task
+                  admin={admin}
+                  key={task._id}
+                  task={task}
+                  deleteTask={deleteTask}
+                ></Task>
+              ))}
               {/* row 1 */}
             </tbody>
           </table>

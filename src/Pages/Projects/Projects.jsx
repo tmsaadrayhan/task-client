@@ -11,7 +11,6 @@ import Project from "../Project/Project";
 
 const Projects = () => {
   const navigate = useNavigate();
-  const [projectsAdmin, setProjectsAdmin] = useState([]);
   const [projects, setProjects] = useState([]);
   const [admin, setAdmin] = useState(false);
   useEffect(() => {
@@ -40,18 +39,38 @@ const Projects = () => {
     };
     fetchadmin();
   }, []);
-  useEffect(() => {
-    fetch(`http://localhost:5000/projects/${localStorage.getItem("userId")}`, {
-      method: "GET",
-      headers: {
-        "x-access-token": localStorage.getItem("accessToken"),
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setProjects(data);
-      });
-  }, []);
+
+  if (admin) {
+    useEffect(() => {
+      fetch(`http://localhost:5000/projects`, {
+        method: "GET",
+        headers: {
+          "x-access-token": localStorage.getItem("accessToken"),
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setProjects(data);
+        });
+    }, []);
+  } else {
+    useEffect(() => {
+      fetch(
+        `http://localhost:5000/projects/user/${localStorage.getItem("userId")}`,
+        {
+          method: "GET",
+          headers: {
+            "x-access-token": localStorage.getItem("accessToken"),
+          },
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          setProjects(data);
+        });
+    }, []);
+  }
   const deleteProject = (id) => {
     fetch(`http://localhost:5000/projects/${id}`, {
       method: "DELETE",
@@ -63,7 +82,7 @@ const Projects = () => {
       .then((data) => {
         console.log(data);
         if (data.message === "Project deleted successfully") {
-          setProjectsAdmin(projects.filter((project) => project._id !== id));
+          setProjects(projects.filter((project) => project._id !== id));
         }
       });
   };
@@ -142,11 +161,13 @@ const Projects = () => {
             <img className="me-[.2rem]" src={kanban} alt="Kanban Image" />
             Kanban View
           </button>
-          <Link to="/create-project">
-            <button className="flex items-center text-[#FFFFFF] bg-[#8B5CF6] rounded-md px-[.5rem] py-[.25rem]">
-              <FiPlusCircle className="pe-[.25rem]" /> Create
-            </button>
-          </Link>
+          {admin && (
+            <Link to="/create-project">
+              <button className="flex items-center text-[#FFFFFF] bg-[#8B5CF6] rounded-md px-[.5rem] py-[.25rem]">
+                <FiPlusCircle className="pe-[.25rem]" /> Create
+              </button>
+            </Link>
+          )}
         </div>
         <hr className="solid mt-[1rem]"></hr>
         <div className="flex items-center w-full mt-[1rem]">
@@ -182,15 +203,14 @@ const Projects = () => {
               </tr>
             </thead>
             <tbody>
-              {admin &&
-                projects.map((project) => (
-                  <Project
-                    admin={admin}
-                    key={project._id}
-                    deleteProject={deleteProject}
-                    project={project}
-                  ></Project>
-                ))}
+              {projects.map((project) => (
+                <Project
+                  admin={admin}
+                  key={project._id}
+                  deleteProject={deleteProject}
+                  project={project}
+                ></Project>
+              ))}
             </tbody>
           </table>
         </div>

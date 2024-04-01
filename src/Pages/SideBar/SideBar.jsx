@@ -10,8 +10,36 @@ import projects from "../../assets/sidebar/projects.svg";
 import report from "../../assets/sidebar/report.svg";
 import tasks from "../../assets/sidebar/tasks.svg";
 import training from "../../assets/sidebar/training.svg";
+import { useEffect, useState } from "react";
 
 const SideBar = () => {
+  const [admin, setAdmin] = useState(false);
+  useEffect(() => {
+    const fetchadmin = async () => {
+      try {
+        // Retrieve token from local storage
+        const response = await fetch(
+          `http://localhost:5000/users/${localStorage.getItem("userId")}`,
+          {
+            headers: {
+              "x-access-token": localStorage.getItem("accessToken"),
+            },
+          }
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data.isAdmin);
+          setAdmin(data.isAdmin);
+        } else {
+          console.error("Failed to fetch users");
+        }
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+    fetchadmin();
+  }, []);
   return (
     <div className="text-center shadow-[0_20px_20px_0px_rgba(0,0,0,0.3)]">
       <Link to="/">
@@ -49,48 +77,60 @@ const SideBar = () => {
         </div>
       </Link>
       <hr className="solid"></hr> */}
-      <Link to="depertment">
-        <div className="my-[1rem]">
-          <img className="mx-auto" src={employee} alt="" />
-          <p>Depertment</p>
+      {admin && (
+        <div>
+          <Link to="/departments">
+            <div className="my-[1rem]">
+              <img className="mx-auto" src={employee} alt="" />
+              <p>Department</p>
+            </div>
+          </Link>
+          <hr className="solid"></hr>
+          <Link to="/designations">
+            <div className="my-[1rem]">
+              <img className="mx-auto" src={employee} alt="" />
+              <p>Designation</p>
+            </div>
+          </Link>
+          <hr className="solid"></hr>
         </div>
-      </Link>
-      <hr className="solid"></hr>
-      <Link>
+      )}
+      <Link to="/attendances">
         <div className="my-[1rem]">
           <img className="mx-auto" src={attendance} alt="" />
           <p>Attendance</p>
         </div>
       </Link>
       <hr className="solid"></hr>
-      <Link>
+      <Link to="/announcements">
         <div className="my-[1rem]">
           <img className="mx-auto" src={accounting} alt="" />
-          <p>Accounting</p>
+          <p>Announcements</p>
         </div>
       </Link>
+      {admin && (
+        <Link to="/create-announcement">
+          <div className="my-[1rem]">
+            <img className="mx-auto" src={accounting} alt="" />
+            <p>Announcement</p>
+          </div>
+        </Link>
+      )}
       <hr className="solid"></hr>
-      <Link>
+      <Link to="/create-leave">
         <div className="my-[1rem]">
           <img className="mx-auto" src={leave} alt="" />
           <p>Leave request</p>
         </div>
       </Link>
-      <hr className="solid"></hr>
-      <Link>
-        <div className="my-[1rem]">
-          <img className="mx-auto" src={training} alt="" />
-          <p>Training</p>
-        </div>
-      </Link>
-      <hr className="solid"></hr>
-      <Link>
-        <div className="my-[1rem]">
-          <img className="mx-auto" src={report} alt="" />
-          <p>Reports</p>
-        </div>
-      </Link>
-      <hr className="solid"></hr>
+      {admin && (
+        <Link to="/leaves">
+          <div className="my-[1rem]">
+            <img className="mx-auto" src={leave} alt="" />
+            <p>Leave requests</p>
+          </div>
+        </Link>
+      )}
     </div>
   );
 };

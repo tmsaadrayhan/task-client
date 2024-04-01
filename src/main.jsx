@@ -29,6 +29,9 @@ import CreateLeave from "./Pages/CreateLeave/CreateLeave.jsx";
 import EditAttendance from "./Pages/EditAttendance/EditAttendance.jsx";
 import Leaves from "./Pages/Leaves/Leaves.jsx";
 import EditLeave from "./Pages/EditLeave/EditLeave.jsx";
+import CreateAnnouncement from "./Pages/CreateAnnouncement/CreateAnnouncement.jsx";
+import EditAnnouncement from "./Pages/EditAnnouncement/EditAnnouncement.jsx";
+import Announcements from "./Pages/Announcements/Announcements.jsx";
 
 const router = createBrowserRouter([
   {
@@ -182,6 +185,26 @@ const router = createBrowserRouter([
               "x-access-token": localStorage.getItem("accessToken"),
             },
           }),
+      },
+      {
+        path: "/create-announcement",
+        element: <CreateAnnouncement></CreateAnnouncement>,
+      },
+      // Add route for EditAnnouncement component
+      {
+        path: "/edit-announcement/:id",
+        element: <EditAnnouncement></EditAnnouncement>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/announcements/${params.id}`, {
+            headers: {
+              "x-access-token": localStorage.getItem("accessToken"),
+            },
+          }),
+      },
+      // Add route for Announcements component
+      {
+        path: "/announcements",
+        element: <Announcements></Announcements>,
       },
     ],
   },

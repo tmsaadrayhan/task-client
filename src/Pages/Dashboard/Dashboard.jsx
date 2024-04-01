@@ -3,8 +3,102 @@ import projects from "../../assets/dashboard/projects.svg";
 import task from "../../assets/dashboard/task.svg";
 import award from "../../assets/dashboard/award.svg";
 import announcements from "../../assets/dashboard/announcements.svg";
+import { useEffect, useState } from "react";
 
 const Dashboard = () => {
+  const [projects, setProjects] = useState([]);
+  const [tasks, setTasks] = useState([]);
+  const [admin, setAdmin] = useState(false);
+  
+  useEffect(() => {
+    const fetchadmin = async () => {
+      try {
+        // Retrieve token from local storage
+        const response = await fetch(
+          `http://localhost:5000/users/${localStorage.getItem("userId")}`,
+          {
+            headers: {
+              "x-access-token": localStorage.getItem("accessToken"),
+            },
+          }
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data.isAdmin);
+          setAdmin(data.isAdmin);
+        } else {
+          console.error("Failed to fetch users");
+        }
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+    fetchadmin();
+  }, []);
+
+  if (admin) {
+    useEffect(() => {
+      fetch(`http://localhost:5000/projects`, {
+        method: "GET",
+        headers: {
+          "x-access-token": localStorage.getItem("accessToken"),
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setProjects(data);
+        });
+    }, []);
+  } else {
+    useEffect(() => {
+      fetch(
+        `http://localhost:5000/projects/user/${localStorage.getItem("userId")}`,
+        {
+          method: "GET",
+          headers: {
+            "x-access-token": localStorage.getItem("accessToken"),
+          },
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          setProjects(data);
+        });
+    }, []);
+    
+  }
+  if (admin) {
+    useEffect(() => {
+      fetch("http://localhost:5000/tasks", {
+        method: "GET",
+        headers: {
+          "x-access-token": localStorage.getItem("accessToken"),
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setTasks(data);
+        });
+    }, []);
+  } else {
+    useEffect(() => {
+      fetch(
+        `http://localhost:5000/tasks/user/${localStorage.getItem("userId")}`,
+        {
+          method: "GET",
+          headers: {
+            "x-access-token": localStorage.getItem("accessToken"),
+          },
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          setTasks(data);
+        });
+    }, []);
+  }
   const status = (
     <>
       <div className="py-[.2rem] px-[.4rem] text-[#FFFFFF] bg-[#8B5CF6] rounded-md">
@@ -75,7 +169,7 @@ const Dashboard = () => {
               <div className="w-full text-center">
                 <div>
                   <p>Project</p>
-                  <p className="text-3xl font-[600] text-[#8B5CF6]">200</p>
+                  <p className="text-3xl font-[600] text-[#8B5CF6]">{projects.length}</p>
                 </div>
               </div>
             </div>
@@ -86,7 +180,7 @@ const Dashboard = () => {
               <div className="w-full text-center">
                 <div>
                   <p>Tasks</p>
-                  <p className="text-3xl font-[600] text-[#8B5CF6]">500</p>
+                  <p className="text-3xl font-[600] text-[#8B5CF6]">{tasks.length}</p>
                 </div>
               </div>
             </div>

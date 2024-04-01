@@ -23,6 +23,7 @@ const Leave = ({ leave }) => {
         body: JSON.stringify({ name: value }),
       });
     }
+    location.reload();
   };
   return (
     <tr>
