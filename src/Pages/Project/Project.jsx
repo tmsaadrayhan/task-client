@@ -4,7 +4,7 @@ import { MdOutlineCancel } from "react-icons/md";
 import moment from "moment";
 import { Link } from "react-router-dom";
 
-const Project = ({ project, deleteProject }) => {
+const Project = ({ admin, project, deleteProject }) => {
   const {
     _id,
     title,
@@ -73,7 +73,7 @@ const Project = ({ project, deleteProject }) => {
         </div>
       </td>
       <td>
-        <div className="flex justify-center items-center">
+        <div className={admin ? "flex justify-center items-center" : "hidden"}>
           <Link>
             <IoEyeOutline className="text-2xl m-[.2rem]" />
           </Link>

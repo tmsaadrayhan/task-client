@@ -27,6 +27,8 @@ import PrivateRoute from "./Provider/PrivateRoute.jsx";
 import Attendances from "./Pages/Attendances/Attendances.jsx";
 import CreateLeave from "./Pages/CreateLeave/CreateLeave.jsx";
 import EditAttendance from "./Pages/EditAttendance/EditAttendance.jsx";
+import Leaves from "./Pages/Leaves/Leaves.jsx";
+import EditLeave from "./Pages/EditLeave/EditLeave.jsx";
 
 const router = createBrowserRouter([
   {
@@ -165,6 +167,21 @@ const router = createBrowserRouter([
       {
         path: "/create-leave",
         element: <CreateLeave></CreateLeave>,
+      },
+      {
+        path: "/leaves",
+        element: <Leaves></Leaves>,
+      },
+      {
+        // Edit leave
+        path: "/edit-leave/:id",
+        element: <EditLeave></EditLeave>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/leave/${params.id}`, {
+            headers: {
+              "x-access-token": localStorage.getItem("accessToken"),
+            },
+          }),
       },
     ],
   },

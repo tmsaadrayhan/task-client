@@ -11,9 +11,37 @@ import Project from "../Project/Project";
 
 const Projects = () => {
   const navigate = useNavigate();
+  const [projectsAdmin, setProjectsAdmin] = useState([]);
   const [projects, setProjects] = useState([]);
+  const [admin, setAdmin] = useState(false);
   useEffect(() => {
-    fetch("http://localhost:5000/projects", {
+    const fetchadmin = async () => {
+      try {
+        // Retrieve token from local storage
+        const response = await fetch(
+          `http://localhost:5000/users/${localStorage.getItem("userId")}`,
+          {
+            headers: {
+              "x-access-token": localStorage.getItem("accessToken"),
+            },
+          }
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data.isAdmin);
+          setAdmin(data.isAdmin);
+        } else {
+          console.error("Failed to fetch users");
+        }
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+    fetchadmin();
+  }, []);
+  useEffect(() => {
+    fetch(`http://localhost:5000/projects/${localStorage.getItem("userId")}`, {
       method: "GET",
       headers: {
         "x-access-token": localStorage.getItem("accessToken"),
@@ -35,7 +63,7 @@ const Projects = () => {
       .then((data) => {
         console.log(data);
         if (data.message === "Project deleted successfully") {
-          setProjects(projects.filter((project) => project._id !== id));
+          setProjectsAdmin(projects.filter((project) => project._id !== id));
         }
       });
   };
@@ -148,17 +176,21 @@ const Projects = () => {
                 <th className="px-[1rem] mx-auto">Priority</th>
                 <th className="px-[1rem] mx-auto">Assigned</th>
                 <th className="px-[1rem] mx-auto">Progress</th>
-                <th className="px-[1rem] mx-auto">Action</th>
+                <th className={admin ? "px-[1rem] mx-auto" : "hidden"}>
+                  Action
+                </th>
               </tr>
             </thead>
             <tbody>
-              {projects.map((project) => (
-                <Project
-                  key={project._id}
-                  deleteProject={deleteProject}
-                  project={project}
-                ></Project>
-              ))}
+              {admin &&
+                projects.map((project) => (
+                  <Project
+                    admin={admin}
+                    key={project._id}
+                    deleteProject={deleteProject}
+                    project={project}
+                  ></Project>
+                ))}
             </tbody>
           </table>
         </div>

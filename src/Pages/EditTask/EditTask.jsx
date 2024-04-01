@@ -96,13 +96,7 @@ const EditTask = () => {
     });
   };
 
-  const handleRangeChange = (event) => {
-    setFormData({
-      ...formData,
-      progress: parseInt(event.target.value),
-    });
-  };
-
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
 

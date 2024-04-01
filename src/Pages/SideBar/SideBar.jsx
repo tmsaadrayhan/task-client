@@ -49,10 +49,10 @@ const SideBar = () => {
         </div>
       </Link>
       <hr className="solid"></hr> */}
-      <Link>
+      <Link to="depertment">
         <div className="my-[1rem]">
           <img className="mx-auto" src={employee} alt="" />
-          <p>Employee</p>
+          <p>Depertment</p>
         </div>
       </Link>
       <hr className="solid"></hr>
