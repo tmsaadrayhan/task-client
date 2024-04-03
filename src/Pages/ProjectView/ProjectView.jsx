@@ -18,6 +18,31 @@ const ProjectView = () => {
   useEffect(() => {
     setTasks(tasks);
   }, []);
+  const [users, setUsers] = useState([]);
+
+  // Fetch users from the server
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        // Retrieve token from local storage
+        const response = await fetch("http://localhost:5000/users", {
+          headers: {
+            "x-access-token": localStorage.getItem("accessToken"),
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setUsers(data);
+        } else {
+          console.error("Failed to fetch users");
+        }
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+    fetchUsers();
+  }, []);
 
   const deleteTask = (id) => {
     fetch(`http://localhost:5000/tasks/${id}`, {
@@ -35,6 +60,9 @@ const ProjectView = () => {
       });
   };
   console.log(tasks);
+  const getName = (employee) => {
+    return users.filter((user) => user._id === employee);
+  };
   return (
     <div className="p-[2rem] w-full">
       <h1 className="text-4xl text-[#8B5CF6] font-[600]">Task List</h1>
@@ -131,6 +159,7 @@ const ProjectView = () => {
             <tbody>
               {tasks.map((task) => (
                 <Task
+                getName={getName}
                   admin={true}
                   key={task._id}
                   task={task}
