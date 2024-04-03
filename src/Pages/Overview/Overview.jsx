@@ -100,7 +100,6 @@ const Overview = () => {
     }, []);
   }
   // Refs for chart canvases
-  const leaveChartRef = useRef(null);
   const projectsChartRef = useRef(null);
   const tasksChartRef = useRef(null);
 
@@ -123,46 +122,34 @@ const Overview = () => {
     }
   };
 
-  useEffect(() => {
+  // Sample data for demonstration
 
-    // Sample data for demonstration
-    const leaveData = {
-      labels: ["High", "Medium", "Low"],
-      datasets: [
-        {
-          label: "Project",
-          data: [projects.filter(project=> project.priority==="High").length, projects.filter(project=> project.priority==="Medium").length, projects.filter(project=> project.priority==="Low").length],
-          backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-        },
-      ],
-    };
-    const projectsData = {
-      labels: ["In Progress", "Completed", "On Hold"],
-      datasets: [
-        {
-          label: "Task",
-          data: [10, 5, 3],
-          backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-        },
-      ],
-    };
+  const projectsData = {
+    labels: ["In Progress", "Completed", "On Hold"],
+    datasets: [
+      {
+        label: "Task",
+        data: [projects.filter(project=> project.priority==="High").length, projects.filter(project=> project.priority==="Medium").length, projects.filter(project=> project.priority==="Low").length],
+        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+      },
+    ],
+  };
 
-    const tasksData = {
-      labels: ['Not Started', 'In Progress', 'Completed'],
-      datasets: [
-        {
-          label: "Tasks",
-          data: [projects.filter(project=> project.status==="Not Started").length, projects.filter(project=> project.status==="In Progress").length, projects.filter(project=> project.status==="Completed").length],
-          backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-        },
-      ],
-    };
+  const tasksData = {
+    labels: ['Not Started', 'In Progress', 'Completed'],
+    datasets: [
+      {
+        label: "Tasks",
+        data: [tasks.filter(project=> project.status==="Not Started").length, tasks.filter(project=> project.status==="In Progress").length, tasks.filter(project=> project.status==="Completed").length],
+        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+      },
+    ],
+  };
+  console.log(projects, tasks);
 
-    // Create and update charts
-    createChart(leaveChartRef, leaveData, "doughnut");
-    createChart(projectsChartRef, projectsData, "line");
-    createChart(tasksChartRef, tasksData, "bar");
-  }, []);
+  // Create and update charts
+  createChart(projectsChartRef, projectsData, "pie");
+  createChart(tasksChartRef, tasksData, "bar");
 
   const [activeTab, setActiveTab] = useState(1);
   const handleTabClick = (index) => {
@@ -178,7 +165,7 @@ const Overview = () => {
           <div className="py-[.5rem] px-[1rem] bg-[#E8DEFD] font-bold">
             Leave taken vs remaining
           </div>
-          <canvas ref={leaveChartRef} />
+          <canvas ref={projectsChartRef} />
         </div>
         <div className="shadow-[0_5px_15px_0px_rgba(0,0,0,0.3)] rounded-xl overflow-hidden mt-8">
           <div className="py-[.5rem] px-[1rem] bg-[#E8DEFD] font-bold">
@@ -187,41 +174,7 @@ const Overview = () => {
           <canvas ref={tasksChartRef} />
         </div>
         <div className="shadow-[0_5px_15px_0px_rgba(0,0,0,0.3)] rounded-xl overflow-hidden">
-          <div className="py-[.5rem] px-[1rem] bg-[#E8DEFD] font-bold">
-            Latest Assigned Task
-          </div>
-          <table className="table w-full text-center">
-            {/* head */}
-            <thead>
-              <tr>
-                <th className="px-[1rem] mx-auto"></th>
-                <th className="px-[1rem] mx-auto">Project</th>
-                <th className="px-[1rem] mx-auto">States</th>
-                <th className="px-[1rem] mx-auto">Assigned</th>
-                <th className="px-[1rem] mx-auto">Progress</th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* row 1 */}
-              <tr>
-                <th>
-                  <label>
-                    <input type="checkbox" className="checkbox" />
-                  </label>
-                </th>
-                <td>
-                  <div className="font-bold">Project Title Here</div>
-                </td>
-                <td>{status}</td>
-                <td>
-                  <div className="mx-auto w-fit">x, y, z</div>
-                </td>
-                <td>
-                  <div className="mx-auto w-fit">0%</div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          
         </div>
         <div className="shadow-[0_5px_15px_0px_rgba(0,0,0,0.3)] rounded-xl overflow-hidden">
           <div className="py-[.5rem] px-[1rem] bg-[#E8DEFD] font-bold">

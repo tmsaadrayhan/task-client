@@ -13,6 +13,59 @@ const Projects = () => {
   const navigate = useNavigate();
   const [projects, setProjects] = useState([]);
   const [admin, setAdmin] = useState(false);
+  const [users, setUsers] = useState([]);
+  const [employees, setEmployees] = useState([]);
+  const getName = async (employee) => {
+    const [name, setName] = useState("");
+
+    try {
+      // Retrieve token from local storage
+      const response = await fetch(
+        `http://localhost:5000/users/user/${employee}`,
+        {
+          headers: {
+            "x-access-token": localStorage.getItem("accessToken"),
+          },
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        setName(data.email);
+      } else {
+        console.error("Failed to fetch users");
+      }
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+    return name
+  };
+
+  // Fetch users from the server
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        // Retrieve token from local storage
+        const response = await fetch("http://localhost:5000/users", {
+          headers: {
+            "x-access-token": localStorage.getItem("accessToken"),
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setUsers(data);
+        } else {
+          console.error("Failed to fetch users");
+        }
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+    fetchUsers();
+  }, []);
+  console.log(users);
+
   useEffect(() => {
     const fetchadmin = async () => {
       try {
@@ -66,11 +119,12 @@ const Projects = () => {
       )
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
           setProjects(data);
         });
     }, []);
   }
+  console.log(projects);
+
   const deleteProject = (id) => {
     fetch(`http://localhost:5000/projects/${id}`, {
       method: "DELETE",
@@ -80,7 +134,6 @@ const Projects = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.message === "Project deleted successfully") {
           setProjects(projects.filter((project) => project._id !== id));
         }
@@ -105,6 +158,7 @@ const Projects = () => {
   //       });
   //   }
   // };
+  console.log(users);
   return (
     <div className="p-[2rem] w-full">
       <h1 className="text-4xl text-[#8B5CF6] font-[600]">Project List</h1>
@@ -205,6 +259,7 @@ const Projects = () => {
             <tbody>
               {projects.map((project) => (
                 <Project
+                  getName={getName}
                   admin={admin}
                   key={project._id}
                   deleteProject={deleteProject}

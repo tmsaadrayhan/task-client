@@ -77,13 +77,11 @@ const Tasks = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.message === "Task deleted successfully") {
           setTasks(tasks.filter((task) => task._id !== id));
         }
       });
   };
-  console.log(tasks);
 
   return (
     <div className="p-[2rem] w-full">

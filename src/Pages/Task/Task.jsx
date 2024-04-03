@@ -3,6 +3,7 @@ import { FiEdit } from "react-icons/fi";
 import { MdOutlineCancel } from "react-icons/md";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import GetName from "../GetName/GetName";
 
 const Task = ({ admin, task, deleteTask }) => {
   const {
@@ -15,6 +16,8 @@ const Task = ({ admin, task, deleteTask }) => {
     assignedEmployees,
     status,
   } = task;
+  console.log(assignedEmployees);
+
   const notStarted = (
     <>
       <div className="py-[.2rem] px-[.4rem] text-[#FFFFFF] bg-[#8B5CF6] rounded-md">
@@ -65,7 +68,7 @@ const Task = ({ admin, task, deleteTask }) => {
         {status === "Completed" && completed}
       </td>
       <td>
-        <div className="mx-auto w-fit">x, y, z</div>
+        <div className="mx-auto w-fit">{assignedEmployees.map(employee=><GetName key={employee} employee={employee} ></GetName>)}</div>
       </td>
       {admin && (
         <td>

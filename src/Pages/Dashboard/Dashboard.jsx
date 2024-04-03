@@ -208,7 +208,6 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-
         <div className="shadow-[0_5px_15px_0px_rgba(0,0,0,0.3)] rounded-xl overflow-hidden">
           <div className="py-[.5rem] px-[1rem] bg-[#E8DEFD] font-bold">
             Leave taken vs remaing

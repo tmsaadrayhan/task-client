@@ -20,7 +20,7 @@ const Department = ({ department, deleteDepartment }) => {
       </td>
       <td>
         <div className="flex justify-center items-center">
-          <Link>
+          <Link to={`/designation-view/${_id}`}>
             <IoEyeOutline className="text-2xl m-[.2rem]" />
           </Link>
           <Link to={`http://localhost:5173/edit-department/${_id}`}>

@@ -3,8 +3,14 @@ import { FiEdit } from "react-icons/fi";
 import { MdOutlineCancel } from "react-icons/md";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import GetName from "../GetName/GetName";
+import { useEffect, useState } from "react";
 
-const Project = ({ admin, project, deleteProject }) => {
+const Project = ({ getName, admin, project, deleteProject }) => {
+  
+  
+  
+  
   const {
     _id,
     title,
@@ -15,6 +21,8 @@ const Project = ({ admin, project, deleteProject }) => {
     priority,
     assignedEmployees,
   } = project;
+
+  
   const medium = (
     <>
       <div className="py-[.2rem] px-[.4rem] text-[#FFFFFF] bg-[#8B5CF6] rounded-md">
@@ -65,7 +73,7 @@ const Project = ({ admin, project, deleteProject }) => {
         {priority === "Low" && low}
       </td>
       <td>
-        <div className="mx-auto w-fit">x, y, z</div>
+        <div className="mx-auto w-fit">{assignedEmployees.map(nm =><GetName key={nm} getName={getName} nm={nm}></GetName>)}</div>
       </td>
       <td>
         <div className="mx-auto w-fit">
@@ -74,7 +82,7 @@ const Project = ({ admin, project, deleteProject }) => {
       </td>
       <td>
         <div className={admin ? "flex justify-center items-center" : "hidden"}>
-          <Link>
+          <Link to={`/project-view/${_id}`}>
             <IoEyeOutline className="text-2xl m-[.2rem]" />
           </Link>
           <Link to={`http://localhost:5173/edit-project/${_id}`}>

@@ -8,22 +8,37 @@ import { IoIosSearch } from "react-icons/io";
 import { IoEyeOutline } from "react-icons/io5";
 import { FiEdit } from "react-icons/fi";
 import { MdOutlineCancel } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
+import { useEffect, useState } from "react";
+import Task from "../Task/Task";
 
 const ProjectView = () => {
-   
-  const status = (
-    <>
-      <div className="py-[.2rem] px-[.4rem] text-[#FFFFFF] bg-[#8B5CF6] rounded-md">
-        In progress
-      </div>
-    </>
-  );
+  const [tasks, setTasks] = useState(useLoaderData());
+
+  useEffect(() => {
+    setTasks(tasks);
+  }, []);
+
+  const deleteTask = (id) => {
+    fetch(`http://localhost:5000/tasks/${id}`, {
+      method: "DELETE",
+      headers: {
+        "x-access-token": localStorage.getItem("accessToken"),
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.message === "Task deleted successfully") {
+          setTasks(tasks.filter((task) => task._id !== id));
+        }
+      });
+  };
+  console.log(tasks);
   return (
     <div className="p-[2rem] w-full">
-      <h1 className="text-4xl text-[#8B5CF6] font-[600]">Project View</h1>
+      <h1 className="text-4xl text-[#8B5CF6] font-[600]">Task List</h1>
       <hr className="solid mt-[1rem]"></hr>
-      <h1 className="text-3xl font-[600]">Task List</h1>
       <div className="grid grid-cols-4 gap-4 w-full mt-[2rem]">
         <div className="shadow-[0_5px_15px_0px_rgba(0,0,0,0.3)] rounded-xl flex items-center p-[1rem]">
           <div>
@@ -76,6 +91,7 @@ const ProjectView = () => {
             <img className="me-[.2rem]" src={kanban} alt="Kanban Image" />
             Kanban View
           </button>
+
           <Link to="/create-project">
             <button className="flex items-center text-[#FFFFFF] bg-[#8B5CF6] rounded-md px-[.5rem] py-[.25rem]">
               <FiPlusCircle className="pe-[.25rem]" /> Create
@@ -102,52 +118,26 @@ const ProjectView = () => {
             {/* head */}
             <thead className="bg-[#E8DEFD]">
               <tr>
-                <th className="px-[1rem] mx-auto"></th>
-                <th className="px-[1rem] mx-auto">Task</th>
-                <th className="px-[1rem] mx-auto">Project</th>
-                <th className="px-[1rem] mx-auto">Start Date</th>
-                <th className="px-[1rem] mx-auto">Finish Date</th>
-                <th className="px-[1rem] mx-auto">States</th>
-                <th className="px-[1rem] mx-auto">Assigned</th>
-                <th className="px-[1rem] mx-auto">Action</th>
+                <th className="px-[1rem]"></th>
+                <th className="px-[1rem]">Task</th>
+                <th className="px-[1rem]">Project</th>
+                <th className="px-[1rem]">Start Date</th>
+                <th className="px-[1rem]">Finish Date</th>
+                <th className="px-[1rem]">States</th>
+                <th className="px-[1rem]">Assigned</th>
+                <th className="px-[1rem]">Action</th>
               </tr>
             </thead>
             <tbody>
+              {tasks.map((task) => (
+                <Task
+                  admin={true}
+                  key={task._id}
+                  task={task}
+                  deleteTask={deleteTask}
+                ></Task>
+              ))}
               {/* row 1 */}
-              <tr>
-                <th>
-                  <label>
-                    <input type="checkbox" className="checkbox" />
-                  </label>
-                </th>
-                <td>
-                  <div className="flex items-center gap-3">
-                    <div>
-                      <div className="font-bold">Task Title Here</div>
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  <div className="mx-auto w-fit">Project Title</div>
-                </td>
-                <td>
-                  <div className="mx-auto w-fit">2024-03-14</div>
-                </td>
-                <td>
-                  <div className="mx-auto w-fit">2024-03-14</div>
-                </td>
-                <td>{status}</td>
-                <td>
-                  <div className="mx-auto w-fit">x, y, z</div>
-                </td>
-                <td>
-                  <div className="flex justify-center items-center">
-                    <IoEyeOutline className="text-2xl m-[.2rem]" />
-                    <FiEdit className="text-2xl m-[.2rem] text-[#8B5CF6]" />
-                    <MdOutlineCancel className="text-2xl m-[.2rem] text-[#FB0000]" />
-                  </div>
-                </td>
-              </tr>
             </tbody>
           </table>
         </div>

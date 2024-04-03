@@ -32,6 +32,7 @@ import EditLeave from "./Pages/EditLeave/EditLeave.jsx";
 import CreateAnnouncement from "./Pages/CreateAnnouncement/CreateAnnouncement.jsx";
 import EditAnnouncement from "./Pages/EditAnnouncement/EditAnnouncement.jsx";
 import Announcements from "./Pages/Announcements/Announcements.jsx";
+import DepartmentView from "./Pages/DepartmentView/DepartmentView.jsx";
 
 const router = createBrowserRouter([
   {
@@ -88,8 +89,14 @@ const router = createBrowserRouter([
           }),
       },
       {
-        path: "/project-view",
+        path: "/project-view/:id",
         element: <ProjectView></ProjectView>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/tasks/project/${params.id}`, {
+            headers: {
+              "x-access-token": localStorage.getItem("accessToken"),
+            },
+          }),
       },
       {
         path: "/tasks",
@@ -139,6 +146,16 @@ const router = createBrowserRouter([
       {
         path: "/designations",
         element: <Designations></Designations>,
+      },
+      {
+        path: "/designation-view/:id",
+        element: <DepartmentView></DepartmentView>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/designations/department/${params.id}`, {
+            headers: {
+              "x-access-token": localStorage.getItem("accessToken"),
+            },
+          }),
       },
 
       {
