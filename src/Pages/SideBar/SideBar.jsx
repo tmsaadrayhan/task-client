@@ -63,6 +63,17 @@ const SideBar = () => {
         </div>
       </Link>
       <hr className="solid"></hr>
+      {admin && (
+        <div>
+          <Link to="/all-projects">
+            <div className="my-[1rem]">
+              <img className="mx-auto" src={projects} alt="" />
+              <p>All Projects</p>
+            </div>
+          </Link>
+          <hr className="solid"></hr>
+        </div>
+      )}
       <Link to="/tasks">
         <div className="my-[1rem]">
           <img className="mx-auto" src={tasks} alt="" />
@@ -70,6 +81,17 @@ const SideBar = () => {
         </div>
       </Link>
       <hr className="solid"></hr>
+      {admin && (
+        <div>
+          <Link to="/all-tasks">
+            <div className="my-[1rem]">
+              <img className="mx-auto" src={tasks} alt="" />
+              <p>All Tasks</p>
+            </div>
+          </Link>
+          <hr className="solid"></hr>
+        </div>
+      )}
       {/* <Link>
         <div className="my-[1rem]">
           <img className="mx-auto" src={hrm} alt="" />
@@ -108,21 +130,25 @@ const SideBar = () => {
           <p>Announcements</p>
         </div>
       </Link>
-      {admin && (
-        <Link to="/create-announcement">
-          <div className="my-[1rem]">
-            <img className="mx-auto" src={accounting} alt="" />
-            <p>Announcement</p>
-          </div>
-        </Link>
-      )}
       <hr className="solid"></hr>
+      {admin && (
+        <div>
+          <Link to="/create-announcement">
+            <div className="my-[1rem]">
+              <img className="mx-auto" src={accounting} alt="" />
+              <p>Announcement</p>
+            </div>
+          </Link>
+          <hr className="solid"></hr>
+        </div>
+      )}
       <Link to="/create-leave">
         <div className="my-[1rem]">
           <img className="mx-auto" src={leave} alt="" />
           <p>Leave request</p>
         </div>
       </Link>
+      <hr className="solid"></hr>
       {admin && (
         <Link to="/leaves">
           <div className="my-[1rem]">

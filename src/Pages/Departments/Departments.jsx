@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import Department from "../Department/Department";
+import { Link } from "react-router-dom";
+import { FiPlusCircle } from "react-icons/fi";
 
 const Departments = () => {
   const [departments, setDepartments] = useState([]);
@@ -39,6 +41,11 @@ const Departments = () => {
       <hr className="solid mt-[1rem]"></hr>
 
       <div className="shadow-[0_5px_15px_0px_rgba(0,0,0,0.3)] w-full mt-[3rem] rounded-xl p-[1rem]">
+        <Link to="/create-department">
+          <button className="flex justify-end items-center text-[#FFFFFF] bg-[#8B5CF6] rounded-md px-[.5rem] py-[.25rem]">
+            <FiPlusCircle className="pe-[.25rem]" /> Create
+          </button>
+        </Link>
         <div className="overflow-x-auto">
           <table className="table w-full my-[1rem] text-center">
             {/* head */}
@@ -60,17 +67,6 @@ const Departments = () => {
               ))}
             </tbody>
           </table>
-        </div>
-        <div className="flex w-full">
-          <div className="text-nowrap">Showing 0 to 0 of 0 entries</div>
-          <div className="w-full flex  justify-end">
-            <button className="text-[#8B5CF6] border border-[#8B5CF6] px-[.2rem] rounded-md me-[1rem]">
-              {"< "}Previous
-            </button>
-            <button className="text-[#8B5CF6] border border-[#8B5CF6] px-[.2rem] rounded-md">
-              Next{" >"}
-            </button>
-          </div>
         </div>
       </div>
     </div>

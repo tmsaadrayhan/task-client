@@ -204,6 +204,7 @@ const CreateTask = () => {
               onChange={handleInputChange}
               className="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             >
+              {console.log(projects)}
               {projects.map((project) => (
                 <option key={project._id} value={project._id}>
                   {project.title}

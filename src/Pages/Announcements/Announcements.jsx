@@ -103,17 +103,7 @@ const Announcements = () => {
             </tbody>
           </table>
         </div>
-        <div className="flex w-full">
-          <div className="text-nowrap">Showing 0 to 0 of 0 entries</div>
-          <div className="w-full flex  justify-end">
-            <button className="text-[#8B5CF6] border border-[#8B5CF6] px-[.2rem] rounded-md me-[1rem]">
-              {"< "}Previous
-            </button>
-            <button className="text-[#8B5CF6] border border-[#8B5CF6] px-[.2rem] rounded-md">
-              Next{" >"}
-            </button>
-          </div>
-        </div>
+        
       </div>
     </div>
   );

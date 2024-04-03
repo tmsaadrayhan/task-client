@@ -2,14 +2,15 @@ import punchin from "../../assets/dashboard/punchin.svg";
 import projects from "../../assets/dashboard/projects.svg";
 import task from "../../assets/dashboard/task.svg";
 import award from "../../assets/dashboard/award.svg";
-import announcements from "../../assets/dashboard/announcements.svg";
+import announcement from "../../assets/dashboard/announcements.svg";
 import { useEffect, useState } from "react";
 
 const Dashboard = () => {
   const [projects, setProjects] = useState([]);
   const [tasks, setTasks] = useState([]);
+  const [announcements, setAnnouncements] = useState([]);
   const [admin, setAdmin] = useState(false);
-  
+
   useEffect(() => {
     const fetchadmin = async () => {
       try {
@@ -67,7 +68,6 @@ const Dashboard = () => {
           setProjects(data);
         });
     }, []);
-    
   }
   if (admin) {
     useEffect(() => {
@@ -126,11 +126,31 @@ const Dashboard = () => {
     });
     console.log(response);
   };
+  useEffect(() => {
+    const fetchAnnouncements = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/announcements", {
+          headers: {
+            "x-access-token": localStorage.getItem("accessToken"),
+          },
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setAnnouncements(data);
+        } else {
+          console.error("Failed to fetch announcements");
+        }
+      } catch (error) {
+        console.error("Error fetching announcements:", error);
+      }
+    };
+    fetchAnnouncements();
+  }, []);
   return (
     <div className="p-[2rem] w-full">
       <h1 className="text-4xl text-[#8B5CF6] font-[600]">Dashboard</h1>
       <hr className="solid mt-[1rem]"></hr>
-      <div className="grid grid-cols-2 gap-4 w-full mt-[2rem]">
+      <div className=" w-full mt-[2rem]">
         <div>
           <div className="shadow-[0_5px_15px_0px_rgba(0,0,0,0.3)] rounded-xl flex items-center p-[1rem]">
             <div className="w-full flex items-center">
@@ -169,7 +189,9 @@ const Dashboard = () => {
               <div className="w-full text-center">
                 <div>
                   <p>Project</p>
-                  <p className="text-3xl font-[600] text-[#8B5CF6]">{projects.length}</p>
+                  <p className="text-3xl font-[600] text-[#8B5CF6]">
+                    {projects.length}
+                  </p>
                 </div>
               </div>
             </div>
@@ -180,15 +202,17 @@ const Dashboard = () => {
               <div className="w-full text-center">
                 <div>
                   <p>Tasks</p>
-                  <p className="text-3xl font-[600] text-[#8B5CF6]">{tasks.length}</p>
+                  <p className="text-3xl font-[600] text-[#8B5CF6]">
+                    {tasks.length}
+                  </p>
                 </div>
               </div>
             </div>
-            <div className="shadow-[0_5px_15px_0px_rgba(0,0,0,0.3)] rounded-xl flex items-center p-[1rem]">
+            <div className="opacity-[0.5] shadow-[0_5px_15px_0px_rgba(0,0,0,0.3)] rounded-xl flex items-center p-[1rem]">
               <div>
                 <img src={award} alt="" />
               </div>
-              <div className="w-full text-center">
+              <div className="w-full text-center ">
                 <div>
                   <p>Awards</p>
                   <p className="text-3xl font-[600] text-[#8B5CF6]">25</p>
@@ -197,96 +221,20 @@ const Dashboard = () => {
             </div>
             <div className="shadow-[0_5px_15px_0px_rgba(0,0,0,0.3)] rounded-xl flex items-center p-[1rem]">
               <div>
-                <img src={announcements} alt="" />
+                <img src={announcement} alt="" />
               </div>
               <div className="w-full text-center">
                 <div>
                   <p>Announcements</p>
-                  <p className="text-3xl font-[600] text-[#8B5CF6]">15</p>
+                  <p className="text-3xl font-[600] text-[#8B5CF6]">
+                    {announcements.length}
+                  </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="shadow-[0_5px_15px_0px_rgba(0,0,0,0.3)] rounded-xl overflow-hidden">
-          <div className="py-[.5rem] px-[1rem] bg-[#E8DEFD] font-bold">
-            Leave taken vs remaing
-          </div>
-        </div>
-        <div className="shadow-[0_5px_15px_0px_rgba(0,0,0,0.3)] rounded-xl overflow-hidden">
-          <div className="py-[.5rem] px-[1rem] bg-[#E8DEFD] font-bold">
-            Latest Assigned Task
-          </div>
-          <table className="table w-full text-center">
-            {/* head */}
-            <thead>
-              <tr>
-                <th className="px-[1rem] mx-auto"></th>
-                <th className="px-[1rem] mx-auto">Project</th>
-                <th className="px-[1rem] mx-auto">States</th>
-                <th className="px-[1rem] mx-auto">Assigned</th>
-                <th className="px-[1rem] mx-auto">Progress</th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* row 1 */}
-              <tr>
-                <th>
-                  <label>
-                    <input type="checkbox" className="checkbox" />
-                  </label>
-                </th>
-                <td>
-                  <div className="font-bold">Project Title Here</div>
-                </td>
-                <td>{status}</td>
-                <td>
-                  <div className="mx-auto w-fit">x, y, z</div>
-                </td>
-                <td>
-                  <div className="mx-auto w-fit">0%</div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div className="shadow-[0_5px_15px_0px_rgba(0,0,0,0.3)] rounded-xl overflow-hidden">
-          <div className="py-[.5rem] px-[1rem] bg-[#E8DEFD] font-bold">
-            Latest Assigned Task
-          </div>
-          <table className="table w-full text-center">
-            {/* head */}
-            <thead>
-              <tr>
-                <th className="px-[1rem] mx-auto"></th>
-                <th className="px-[1rem] mx-auto">Task</th>
-                <th className="px-[1rem] mx-auto">States</th>
-                <th className="px-[1rem] mx-auto">Project</th>
-                <th className="px-[1rem] mx-auto">Progress</th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* row 1 */}
-              <tr>
-                <th>
-                  <label>
-                    <input type="checkbox" className="checkbox" />
-                  </label>
-                </th>
-                <td>
-                  <div className="font-bold">Task Title Here</div>
-                </td>
-                <td>{status}</td>
-                <td>
-                  <div className="font-bold">Project Title Here</div>
-                </td>
-                <td>
-                  <div className="mx-auto w-fit">0%</div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        
       </div>
     </div>
   );

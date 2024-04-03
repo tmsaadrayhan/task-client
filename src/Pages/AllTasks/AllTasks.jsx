@@ -5,14 +5,12 @@ import notstarted from "../../assets/project/notstarted.svg";
 import kanban from "../../assets/project/kanban.svg";
 import { FiPlusCircle } from "react-icons/fi";
 import { IoIosSearch } from "react-icons/io";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Project from "../Project/Project";
-import axios from "axios";
+import Task from "../Task/Task";
 
-const Projects = () => {
-  const navigate = useNavigate();
-  const [projects, setProjects] = useState([]);
+const AllTasks = () => {
+  const [tasks, setTasks] = useState([]);
   const [admin, setAdmin] = useState(false);
   const [users, setUsers] = useState([]);
 
@@ -39,7 +37,6 @@ const Projects = () => {
     };
     fetchUsers();
   }, []);
-  console.log(users);
   useEffect(() => {
     const fetchadmin = async () => {
       try {
@@ -67,28 +64,21 @@ const Projects = () => {
     fetchadmin();
   }, []);
 
-  console.log("admin");
   useEffect(() => {
-    fetch(
-      `http://localhost:5000/projects/user/${localStorage.getItem("userId")}`,
-      {
-        method: "GET",
-        headers: {
-          "x-access-token": localStorage.getItem("accessToken"),
-        },
-      }
-    )
+    fetch("http://localhost:5000/tasks", {
+      method: "GET",
+      headers: {
+        "x-access-token": localStorage.getItem("accessToken"),
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
-        setProjects(data);
+        setTasks(data);
       });
   }, []);
-  console.log(projects);
-  const getName = (employee) => {
-    return users.filter((user) => user._id === employee);
-  };
-  const deleteProject = (id) => {
-    fetch(`http://localhost:5000/projects/${id}`, {
+
+  const deleteTask = (id) => {
+    fetch(`http://localhost:5000/tasks/${id}`, {
       method: "DELETE",
       headers: {
         "x-access-token": localStorage.getItem("accessToken"),
@@ -96,40 +86,24 @@ const Projects = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.message === "Project deleted successfully") {
-          setProjects(projects.filter((project) => project._id !== id));
+        console.log(data);
+        if (data.message === "Task deleted successfully") {
+          setTasks(tasks.filter((task) => task._id !== id));
         }
       });
   };
-  if (projects.error === "Invalid token") {
-    navigate("/login");
-  }
-  // const handleDelete = (id, title) => {
-  //   const proceed = confirm(`Are you sure you want to cancel "${title}"?`);
-  //   if (proceed) {
-  //     fetch(`https://car-doctor-server-p2jz.onrender.com/bookings/${id}`, {
-  //       method: "DELETE",
-  //     })
-  //       .then((res) => res.json())
-  //       .then((data) => {
-  //         console.log(data);
-  //         if (data.deletedCount > 0) {
-  //           alert("Deleted successfully");
-  //           setBookings(bookings.filter((booking) => booking._id !== id));
-  //         }
-  //       });
-  //   }
-  // };
-  console.log(users);
+  console.log(tasks);
+  const getName = (employee) => {
+    return users.filter((user) => user._id === employee);
+  };
   return (
     <div className="p-[2rem] w-full">
-      <h1 className="text-4xl text-[#8B5CF6] font-[600]">Project List</h1>
+      <h1 className="text-4xl text-[#8B5CF6] font-[600]">Task List</h1>
       <hr className="solid mt-[1rem]"></hr>
-
       <div className="shadow-[0_5px_15px_0px_rgba(0,0,0,0.3)] w-full mt-[3rem] rounded-xl p-[1rem]">
-        <div className="w-full flex ">
+        <div className="w-full flex justify-end">
           {admin && (
-            <Link to="/create-project">
+            <Link to="/create-tasks">
               <button className="flex items-center text-[#FFFFFF] bg-[#8B5CF6] rounded-md px-[.5rem] py-[.25rem]">
                 <FiPlusCircle className="pe-[.25rem]" /> Create
               </button>
@@ -141,7 +115,6 @@ const Projects = () => {
           <div className="w-full flex justify-end items-center">
             <IoIosSearch className="me-[-1.5rem] z-[1]" />
             <input
-              disabled
               className="z-[0] border ps-[2rem] p-[.2rem] bg-[#E8DEFD] rounded-md"
               placeholder="Search..."
             />
@@ -152,36 +125,33 @@ const Projects = () => {
             {/* head */}
             <thead className="bg-[#E8DEFD]">
               <tr>
-                <th className="px-[1rem] mx-auto"></th>
-                <th className="px-[1rem] mx-auto">Project</th>
-                <th className="px-[1rem] mx-auto">Start Date</th>
-                <th className="px-[1rem] mx-auto">Finish Date</th>
-                <th className="px-[1rem] mx-auto">Summary</th>
-                <th className="px-[1rem] mx-auto">Priority</th>
-                {admin && <th className="px-[1rem] mx-auto">Assigned</th>}
-                <th className="px-[1rem] mx-auto">Progress</th>
-                <th className={admin ? "px-[1rem] mx-auto" : "hidden"}>
-                  Action
-                </th>
+                <th className="px-[1rem]"></th>
+                <th className="px-[1rem]">Task</th>
+                <th className="px-[1rem]">Project</th>
+                <th className="px-[1rem]">Start Date</th>
+                <th className="px-[1rem]">Finish Date</th>
+                <th className="px-[1rem]">States</th>
+                <th className="px-[1rem]">Assigned</th>
+                {admin && <th className="px-[1rem]">Action</th>}
               </tr>
             </thead>
             <tbody>
-              {projects.map((project) => (
-                <Project
+              {tasks.map((task) => (
+                <Task
                   getName={getName}
                   admin={admin}
-                  key={project._id}
-                  deleteProject={deleteProject}
-                  project={project}
-                ></Project>
+                  key={task._id}
+                  task={task}
+                  deleteTask={deleteTask}
+                ></Task>
               ))}
+              {/* row 1 */}
             </tbody>
           </table>
         </div>
-        
       </div>
     </div>
   );
 };
 
-export default Projects;
+export default AllTasks;

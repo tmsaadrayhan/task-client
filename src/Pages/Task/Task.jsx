@@ -5,7 +5,7 @@ import moment from "moment";
 import { Link } from "react-router-dom";
 import GetName from "../GetName/GetName";
 
-const Task = ({ admin, task, deleteTask }) => {
+const Task = ({ getName, admin, task, deleteTask }) => {
   const {
     _id,
     title,
@@ -67,24 +67,35 @@ const Task = ({ admin, task, deleteTask }) => {
         {status === "In Progress" && inProgress}
         {status === "Completed" && completed}
       </td>
-      <td>
-        <div className="mx-auto w-fit">{assignedEmployees.map(employee=><GetName key={employee} employee={employee} ></GetName>)}</div>
-      </td>
+
       {admin && (
-        <td>
-          <div className="flex justify-center items-center">
-            <Link>
-              <IoEyeOutline className="text-2xl m-[.2rem]" />
-            </Link>
-            <Link to={`http://localhost:5173/edit-task/${_id}`}>
-              <FiEdit className="text-2xl m-[.2rem] text-[#8B5CF6]" />
-            </Link>
-            <MdOutlineCancel
-              onClick={() => deleteTask(_id)}
-              className="text-2xl m-[.2rem] text-[#FB0000]"
-            />
-          </div>
-        </td>
+        <div>
+          <td>
+            <div className="mx-auto w-fit">
+              {assignedEmployees.map((employee) => (
+                <GetName
+                  key={employee}
+                  getName={getName}
+                  nm={employee}
+                ></GetName>
+              ))}
+            </div>
+          </td>
+          <td>
+            <div className="flex justify-center items-center">
+              <Link>
+                <IoEyeOutline className="text-2xl m-[.2rem]" />
+              </Link>
+              <Link to={`http://localhost:5173/edit-task/${_id}`}>
+                <FiEdit className="text-2xl m-[.2rem] text-[#8B5CF6]" />
+              </Link>
+              <MdOutlineCancel
+                onClick={() => deleteTask(_id)}
+                className="text-2xl m-[.2rem] text-[#FB0000]"
+              />
+            </div>
+          </td>
+        </div>
       )}
     </tr>
   );

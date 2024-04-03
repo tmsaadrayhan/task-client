@@ -9,7 +9,7 @@ const Overview = () => {
   const [projects, setProjects] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [admin, setAdmin] = useState(false);
-  
+
   useEffect(() => {
     const fetchadmin = async () => {
       try {
@@ -67,7 +67,6 @@ const Overview = () => {
           setProjects(data);
         });
     }, []);
-    
   }
   if (admin) {
     useEffect(() => {
@@ -111,7 +110,7 @@ const Overview = () => {
         chartRef.current.chart.destroy();
       }
 
-      const ctx = chartRef.current.getContext('2d');
+      const ctx = chartRef.current.getContext("2d");
       chartRef.current.chart = new Chart(ctx, {
         type: chartType,
         data: chartData,
@@ -129,18 +128,26 @@ const Overview = () => {
     datasets: [
       {
         label: "Task",
-        data: [projects.filter(project=> project.priority==="High").length, projects.filter(project=> project.priority==="Medium").length, projects.filter(project=> project.priority==="Low").length],
+        data: [
+          projects.filter((project) => project.priority === "High").length,
+          projects.filter((project) => project.priority === "Medium").length,
+          projects.filter((project) => project.priority === "Low").length,
+        ],
         backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
       },
     ],
   };
 
   const tasksData = {
-    labels: ['Not Started', 'In Progress', 'Completed'],
+    labels: ["Not Started", "In Progress", "Completed"],
     datasets: [
       {
         label: "Tasks",
-        data: [tasks.filter(project=> project.status==="Not Started").length, tasks.filter(project=> project.status==="In Progress").length, tasks.filter(project=> project.status==="Completed").length],
+        data: [
+          tasks.filter((project) => project.status === "Not Started").length,
+          tasks.filter((project) => project.status === "In Progress").length,
+          tasks.filter((project) => project.status === "Completed").length,
+        ],
         backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
       },
     ],
@@ -173,86 +180,17 @@ const Overview = () => {
           </div>
           <canvas ref={tasksChartRef} />
         </div>
-        <div className="shadow-[0_5px_15px_0px_rgba(0,0,0,0.3)] rounded-xl overflow-hidden">
-          
-        </div>
-        <div className="shadow-[0_5px_15px_0px_rgba(0,0,0,0.3)] rounded-xl overflow-hidden">
-          <div className="py-[.5rem] px-[1rem] bg-[#E8DEFD] font-bold">
-            Latest Assigned Task
-          </div>
-          <table className="table w-full text-center">
-            {/* head */}
-            <thead>
-              <tr>
-                <th className="px-[1rem] mx-auto"></th>
-                <th className="px-[1rem] mx-auto">Task</th>
-                <th className="px-[1rem] mx-auto">States</th>
-                <th className="px-[1rem] mx-auto">Project</th>
-                <th className="px-[1rem] mx-auto">Progress</th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* row 1 */}
-              <tr>
-                <th>
-                  <label>
-                    <input type="checkbox" className="checkbox" />
-                  </label>
-                </th>
-                <td>
-                  <div className="font-bold">Task Title Here</div>
-                </td>
-                <td>{status}</td>
-                <td>
-                  <div className="font-bold">Project Title Here</div>
-                </td>
-                <td>
-                  <div className="mx-auto w-fit">0%</div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <div className="shadow-[0_5px_15px_0px_rgba(0,0,0,0.3)] rounded-xl overflow-hidden"></div>
       </div>
       <div>
         <div className="flex text-xl overflow-hidden md:overflow-hidden my-[1rem]">
-          <p
-            className={`${activeTab === 1 && "text-primary border"} rounded-lg p-[1rem] mx-[1rem]`}
-            onClick={() => handleTabClick(1)}
-          >
+          <p className={`text-primary font-bold p-[1rem] mx-[1rem]`}>
             Personal Details
-          </p>
-          <p
-            className={`${activeTab === 2 && "text-primary border"} rounded-lg p-[1rem] mx-[1rem]`}
-            onClick={() => handleTabClick(2)}
-          >
-            Leave
-          </p>
-          <p
-            className={`${activeTab === 3 && "text-primary border"} rounded-lg p-[1rem] mx-[1rem]`}
-            onClick={() => handleTabClick(3)}
-          >
-            Projects
-          </p>
-          <p
-            className={`${activeTab === 4 && "text-primary border"} rounded-lg p-[1rem] mx-[1rem]`}
-            onClick={() => handleTabClick(4)}
-          >
-            Tasks
           </p>
         </div>
         <hr className="solid mt-[1rem]" />
-        <div className={`${activeTab === 1 ? "block" : "hidden"}`}>
-            <UpdateProfile></UpdateProfile>
-        </div>
-        <div className={`${activeTab === 2 ? "block" : "hidden"}`}>
-            <Leave></Leave>
-        </div>
-        <div className={`${activeTab === 3 ? "block" : "hidden"}`}>
-        <Projects></Projects>
-        </div>
-        <div className={`${activeTab === 4 ? "block" : "hidden"}`}>
-            <Tasks></Tasks>
+        <div>
+          <UpdateProfile></UpdateProfile>
         </div>
       </div>
     </div>

@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import Project from "../Project/Project";
 import axios from "axios";
 
-const Projects = () => {
+const AllProjects = () => {
   const navigate = useNavigate();
   const [projects, setProjects] = useState([]);
   const [admin, setAdmin] = useState(false);
@@ -40,6 +40,7 @@ const Projects = () => {
     fetchUsers();
   }, []);
   console.log(users);
+
   useEffect(() => {
     const fetchadmin = async () => {
       try {
@@ -69,20 +70,19 @@ const Projects = () => {
 
   console.log("admin");
   useEffect(() => {
-    fetch(
-      `http://localhost:5000/projects/user/${localStorage.getItem("userId")}`,
-      {
-        method: "GET",
-        headers: {
-          "x-access-token": localStorage.getItem("accessToken"),
-        },
-      }
-    )
+    fetch(`http://localhost:5000/projects`, {
+      method: "GET",
+      headers: {
+        "x-access-token": localStorage.getItem("accessToken"),
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         setProjects(data);
       });
   }, []);
+
   console.log(projects);
   const getName = (employee) => {
     return users.filter((user) => user._id === employee);
@@ -125,23 +125,20 @@ const Projects = () => {
     <div className="p-[2rem] w-full">
       <h1 className="text-4xl text-[#8B5CF6] font-[600]">Project List</h1>
       <hr className="solid mt-[1rem]"></hr>
-
+      
       <div className="shadow-[0_5px_15px_0px_rgba(0,0,0,0.3)] w-full mt-[3rem] rounded-xl p-[1rem]">
-        <div className="w-full flex ">
-          {admin && (
-            <Link to="/create-project">
-              <button className="flex items-center text-[#FFFFFF] bg-[#8B5CF6] rounded-md px-[.5rem] py-[.25rem]">
-                <FiPlusCircle className="pe-[.25rem]" /> Create
-              </button>
-            </Link>
-          )}
-        </div>
+        {admin && (
+          <Link to="/create-project">
+            <button className="flex items-center text-[#FFFFFF] bg-[#8B5CF6] rounded-md px-[.5rem] py-[.25rem]">
+              <FiPlusCircle className="pe-[.25rem]" /> Create
+            </button>
+          </Link>
+        )}
         <hr className="solid mt-[1rem]"></hr>
         <div className="flex items-center w-full mt-[1rem]">
           <div className="w-full flex justify-end items-center">
             <IoIosSearch className="me-[-1.5rem] z-[1]" />
-            <input
-              disabled
+            <input disabled
               className="z-[0] border ps-[2rem] p-[.2rem] bg-[#E8DEFD] rounded-md"
               placeholder="Search..."
             />
@@ -158,7 +155,7 @@ const Projects = () => {
                 <th className="px-[1rem] mx-auto">Finish Date</th>
                 <th className="px-[1rem] mx-auto">Summary</th>
                 <th className="px-[1rem] mx-auto">Priority</th>
-                {admin && <th className="px-[1rem] mx-auto">Assigned</th>}
+                <th className="px-[1rem] mx-auto">Assigned</th>
                 <th className="px-[1rem] mx-auto">Progress</th>
                 <th className={admin ? "px-[1rem] mx-auto" : "hidden"}>
                   Action
@@ -184,4 +181,4 @@ const Projects = () => {
   );
 };
 
-export default Projects;
+export default AllProjects;

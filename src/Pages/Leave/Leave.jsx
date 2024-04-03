@@ -1,30 +1,33 @@
 const Leave = ({ leave }) => {
   const { _id, userId, department, leaveType, startDate, finishDate, status } =
     leave;
-  console.log(leave);
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    if (value === "Approved") {
-      fetch(`http://localhost:5000/leave/${_id}/approve`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "x-access-token": localStorage.getItem("accessToken"),
-        },
-        body: JSON.stringify({ name: value }),
-      });
-    } else {
-      fetch(`http://localhost:5000/leave/${_id}/reject`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "x-access-token": localStorage.getItem("accessToken"),
-        },
-        body: JSON.stringify({ name: value }),
-      });
-    }
+  console.log();
+  const approve = () => {
+    fetch(`http://localhost:5000/leave/${_id}/approve`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": localStorage.getItem("accessToken"),
+      },
+      body: JSON.stringify({ name: "Approved" }),
+    });
+
     location.reload();
   };
+  const reject = () => {
+
+    fetch(`http://localhost:5000/leave/${_id}/reject`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": localStorage.getItem("accessToken"),
+      },
+      body: JSON.stringify({ name: "Rejected" }),
+    });
+
+    location.reload();
+  };
+
   return (
     <tr>
       <th>
@@ -60,15 +63,21 @@ const Leave = ({ leave }) => {
             >
               Status
             </label>
-            <select
-              id="status"
-              name="status"
-              onChange={handleInputChange}
-              className="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            >
-              <option value="Rejected">Rejected</option>
-              <option value="Approved">Approved</option>
-            </select>
+
+            <div className="flex">
+              <button
+                onClick={() => reject()}
+                className="flex justify-end items-center text-[#FFFFFF] bg-[#8B5CF6] rounded-md px-[.5rem] py-[.25rem] me-[1rem]"
+              >
+                Rejected
+              </button>
+              <button
+                onClick={() => approve()}
+                className="flex justify-end items-center text-[#FFFFFF] bg-[#8B5CF6] rounded-md px-[.5rem] py-[.25rem]"
+              >
+                Approved
+              </button>
+            </div>
           </div>
         </div>
       </td>

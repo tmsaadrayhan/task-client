@@ -33,6 +33,8 @@ import CreateAnnouncement from "./Pages/CreateAnnouncement/CreateAnnouncement.js
 import EditAnnouncement from "./Pages/EditAnnouncement/EditAnnouncement.jsx";
 import Announcements from "./Pages/Announcements/Announcements.jsx";
 import DepartmentView from "./Pages/DepartmentView/DepartmentView.jsx";
+import AllProjects from "./Pages/AllProjects/AllProjects.jsx";
+import AllTasks from "./Pages/AllTasks/AllTasks.jsx";
 
 const router = createBrowserRouter([
   {
@@ -72,6 +74,10 @@ const router = createBrowserRouter([
         element: <Projects></Projects>,
       },
       {
+        path: "/all-projects",
+        element: <AllProjects></AllProjects>,
+      },
+      {
         // Create Project
         path: "/create-project",
         element: <CreateProject></CreateProject>,
@@ -101,6 +107,10 @@ const router = createBrowserRouter([
       {
         path: "/tasks",
         element: <Tasks></Tasks>,
+      },
+      {
+        path: "/all-tasks",
+        element: <AllTasks></AllTasks>,
       },
       {
         // Create Task

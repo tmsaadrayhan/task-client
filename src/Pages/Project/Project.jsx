@@ -7,10 +7,6 @@ import GetName from "../GetName/GetName";
 import { useEffect, useState } from "react";
 
 const Project = ({ getName, admin, project, deleteProject }) => {
-  
-  
-  
-  
   const {
     _id,
     title,
@@ -22,7 +18,6 @@ const Project = ({ getName, admin, project, deleteProject }) => {
     assignedEmployees,
   } = project;
 
-  
   const medium = (
     <>
       <div className="py-[.2rem] px-[.4rem] text-[#FFFFFF] bg-[#8B5CF6] rounded-md">
@@ -72,9 +67,15 @@ const Project = ({ getName, admin, project, deleteProject }) => {
         {priority === "High" && high}
         {priority === "Low" && low}
       </td>
-      <td>
-        <div className="mx-auto w-fit">{assignedEmployees.map(nm =><GetName key={nm} getName={getName} nm={nm}></GetName>)}</div>
-      </td>
+      {admin && (
+        <td>
+          <div className="mx-auto w-fit">
+            {assignedEmployees.map((nm) => (
+              <GetName key={nm} getName={getName} nm={nm}></GetName>
+            ))}
+          </div>
+        </td>
+      )}
       <td>
         <div className="mx-auto w-fit">
           {progress === "In Progress" ? "0%" : `${progress}%`}

@@ -12,6 +12,31 @@ import Task from "../Task/Task";
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);
   const [admin, setAdmin] = useState(false);
+  const [users, setUsers] = useState([]);
+
+  // Fetch users from the server
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        // Retrieve token from local storage
+        const response = await fetch("http://localhost:5000/users", {
+          headers: {
+            "x-access-token": localStorage.getItem("accessToken"),
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setUsers(data);
+        } else {
+          console.error("Failed to fetch users");
+        }
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+    fetchUsers();
+  }, []);
   useEffect(() => {
     const fetchadmin = async () => {
       try {
@@ -77,70 +102,26 @@ const Tasks = () => {
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         if (data.message === "Task deleted successfully") {
           setTasks(tasks.filter((task) => task._id !== id));
         }
       });
+  };
+  console.log(tasks);
+  const getName = (employee) => {
+    return users.filter((user) => user._id === employee);
   };
 
   return (
     <div className="p-[2rem] w-full">
       <h1 className="text-4xl text-[#8B5CF6] font-[600]">Task List</h1>
       <hr className="solid mt-[1rem]"></hr>
-      <div className="grid grid-cols-4 gap-4 w-full mt-[2rem]">
-        <div className="shadow-[0_5px_15px_0px_rgba(0,0,0,0.3)] rounded-xl flex items-center p-[1rem]">
-          <div>
-            <img src={completed} alt="" />
-          </div>
-          <div className="w-full flex justify-center">
-            <div>
-              <p>Completed</p>
-              <p className="text-3xl font-[600] text-[#8B5CF6]">200</p>
-            </div>
-          </div>
-        </div>
-        <div className="shadow-[0_5px_15px_0px_rgba(0,0,0,0.3)] rounded-xl flex items-center p-[1rem]">
-          <div>
-            <img src={inprogress} alt="" />
-          </div>
-          <div className="w-full justify-center">
-            <div>
-              <p>In progress</p>
-              <p className="text-3xl font-[600] text-[#8B5CF6]">50</p>
-            </div>
-          </div>
-        </div>
-        <div className="shadow-[0_5px_15px_0px_rgba(0,0,0,0.3)] rounded-xl flex items-center p-[1rem]">
-          <div>
-            <img src={notstarted} alt="" />
-          </div>
-          <div className="w-full flex justify-center">
-            <div>
-              <p>Not started</p>
-              <p className="text-3xl font-[600] text-[#8B5CF6]">20</p>
-            </div>
-          </div>
-        </div>
-        <div className="shadow-[0_5px_15px_0px_rgba(0,0,0,0.3)] rounded-xl flex items-center p-[1rem]">
-          <div>
-            <img src={cancelled} alt="" />
-          </div>
-          <div className="w-full flex justify-center">
-            <div>
-              <p>Cancelled</p>
-              <p className="text-3xl font-[600] text-[#8B5CF6]">15</p>
-            </div>
-          </div>
-        </div>
-      </div>
+
       <div className="shadow-[0_5px_15px_0px_rgba(0,0,0,0.3)] w-full mt-[3rem] rounded-xl p-[1rem]">
         <div className="w-full flex justify-end">
-          <button className="flex items-center text-[#00000050] bg-[#E8DEFD] rounded-md px-[.5rem] py-[.25rem] me-[1rem]">
-            <img className="me-[.2rem]" src={kanban} alt="Kanban Image" />
-            Kanban View
-          </button>
           {admin && (
-            <Link to="/create-project">
+            <Link to="/create-tasks">
               <button className="flex items-center text-[#FFFFFF] bg-[#8B5CF6] rounded-md px-[.5rem] py-[.25rem]">
                 <FiPlusCircle className="pe-[.25rem]" /> Create
               </button>
@@ -149,11 +130,6 @@ const Tasks = () => {
         </div>
         <hr className="solid mt-[1rem]"></hr>
         <div className="flex items-center w-full mt-[1rem]">
-          <select className="border join-item p-[.2rem] rounded-md">
-            <option>5</option>
-            <option selected>10</option>
-            <option>20</option>
-          </select>
           <div className="w-full flex justify-end items-center">
             <IoIosSearch className="me-[-1.5rem] z-[1]" />
             <input
@@ -173,13 +149,14 @@ const Tasks = () => {
                 <th className="px-[1rem]">Start Date</th>
                 <th className="px-[1rem]">Finish Date</th>
                 <th className="px-[1rem]">States</th>
-                <th className="px-[1rem]">Assigned</th>
+                {admin && <th className="px-[1rem]">Assigned</th>}
                 {admin && <th className="px-[1rem]">Action</th>}
               </tr>
             </thead>
             <tbody>
               {tasks.map((task) => (
                 <Task
+                  getName={getName}
                   admin={admin}
                   key={task._id}
                   task={task}
@@ -189,17 +166,6 @@ const Tasks = () => {
               {/* row 1 */}
             </tbody>
           </table>
-        </div>
-        <div className="flex w-full">
-          <div className="text-nowrap">Showing 0 to 0 of 0 entries</div>
-          <div className="w-full flex  justify-end">
-            <button className="text-[#8B5CF6] border border-[#8B5CF6] px-[.2rem] rounded-md me-[1rem]">
-              {"< "}Previous
-            </button>
-            <button className="text-[#8B5CF6] border border-[#8B5CF6] px-[.2rem] rounded-md">
-              Next{" >"}
-            </button>
-          </div>
         </div>
       </div>
     </div>
