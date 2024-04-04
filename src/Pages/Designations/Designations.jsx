@@ -17,6 +17,20 @@ const Designations = () => {
         setDesignations(data);
       });
   }, []);
+  const [departments, setDepartments] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/departments", {
+      method: "GET",
+      headers: {
+        "x-access-token": localStorage.getItem("accessToken"),
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setDepartments(data);
+      });
+  }, []);
   const deleteDesignation = (id) => {
     fetch(`http://localhost:5000/designations/${id}`, {
       method: "DELETE",
@@ -34,7 +48,10 @@ const Designations = () => {
         }
       });
   };
-  console.log(designations);
+  const getName = (id) => {
+    console.log(departments, id);
+    return departments.filter((dep) => dep._id === id);
+  };
   return (
     <div className="p-[2rem] w-full">
       <h1 className="text-4xl text-[#8B5CF6] font-[600]">Designation List</h1>
@@ -60,6 +77,7 @@ const Designations = () => {
             <tbody>
               {designations.map((designation) => (
                 <Designation
+                  getName={getName}
                   key={designation._id}
                   deleteDesignation={deleteDesignation}
                   designation={designation}

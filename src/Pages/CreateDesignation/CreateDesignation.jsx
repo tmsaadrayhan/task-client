@@ -79,7 +79,7 @@ const CreateDesignation = () => {
 
   return (
     <div className="w-full p-[2rem]">
-      <h1 className="text-4xl text-[#8B5CF6] font-[600]">Create Department</h1>
+      <h1 className="text-4xl text-[#8B5CF6] font-[600]">Create Designation</h1>
       <hr className="solid mt-[1rem]" />
       <form className="rounded-lg shadow-lg mt-[1rem]" onSubmit={handleSubmit}>
         <div className="grid grid-cols-2 gap-4 p-[2rem]">

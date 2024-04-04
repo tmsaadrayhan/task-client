@@ -5,6 +5,7 @@ import { FiPlusCircle } from "react-icons/fi";
 
 const Departments = () => {
   const [departments, setDepartments] = useState([]);
+
   useEffect(() => {
     fetch("http://localhost:5000/departments", {
       method: "GET",
@@ -16,6 +17,31 @@ const Departments = () => {
       .then((data) => {
         setDepartments(data);
       });
+  }, []);
+  const [users, setUsers] = useState([]);
+
+  // Fetch users from the server
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        // Retrieve token from local storage
+        const response = await fetch("http://localhost:5000/users", {
+          headers: {
+            "x-access-token": localStorage.getItem("accessToken"),
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setUsers(data);
+        } else {
+          console.error("Failed to fetch users");
+        }
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+    fetchUsers();
   }, []);
   const deleteDepartment = (id) => {
     fetch(`http://localhost:5000/departments/${id}`, {
@@ -34,7 +60,9 @@ const Departments = () => {
         }
       });
   };
-  console.log(departments);
+  const getName = (employee) => {
+    return users.filter((user) => user._id === employee);
+  };
   return (
     <div className="p-[2rem] w-full">
       <h1 className="text-4xl text-[#8B5CF6] font-[600]">Department List</h1>
@@ -60,6 +88,7 @@ const Departments = () => {
             <tbody>
               {departments.map((department) => (
                 <Department
+                  getName={getName}
                   key={department._id}
                   deleteDepartment={deleteDepartment}
                   department={department}

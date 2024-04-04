@@ -1,3 +1,4 @@
+import moment from "moment";
 import { FiEdit } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
@@ -14,10 +15,10 @@ const Attendance = ({ admin, attendance }) => {
         <div className="font-bold">{userId}</div>
       </td>
       <td>
-        <div className="font-bold">{startTime}</div>
+        <div className="font-bold">{moment(startTime).format('MMMM Do YYYY, h:mm:ss a')}</div>
       </td>
       <td>
-        <div className="font-bold">{finishTime}</div>
+        <div className="font-bold">{moment(finishTime).format('MMMM Do YYYY, h:mm:ss a')}</div>
       </td>
       <td>
         <div className="font-bold">{status}</div>

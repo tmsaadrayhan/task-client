@@ -2,8 +2,10 @@ import { Link } from "react-router-dom";
 import { IoEyeOutline } from "react-icons/io5";
 import { FiEdit } from "react-icons/fi";
 import { MdOutlineCancel } from "react-icons/md";
+import GetName from "../GetName/GetName";
+import GetDepartment from "../GetDepartment/GetDepartment";
 
-const Designation = ({designation, deleteDesignation}) => {
+const Designation = ({ getName, designation, deleteDesignation}) => {
     console.log(designation);
   // const getDepartment =
   const { _id, title, departmentId } = designation;
@@ -18,7 +20,7 @@ const Designation = ({designation, deleteDesignation}) => {
         <div className="font-bold">{title}</div>
       </td>
       <td>
-        <div className="font-bold">{departmentId}</div>
+        <div className="font-bold"><GetDepartment getName={getName} nm={departmentId}></GetDepartment></div>
       </td>
       <td>
         <div className="flex justify-center items-center">

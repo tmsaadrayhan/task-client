@@ -1,9 +1,11 @@
-const GetName = ({ getName, nm }) => {
-  const user= getName(nm);
+import React from 'react';
+
+const GetDepartment = ({ getName, nm }) => {
+    const user= getName(nm);
   console.log(user)
   const getEmail= (user)=> {
     try{
-      return user[0].email;
+      return user[0].departmentName;
     }
     catch{
       return "";
@@ -14,4 +16,4 @@ const GetName = ({ getName, nm }) => {
   return <div>{email}</div>;
 };
 
-export default GetName;
+export default GetDepartment;

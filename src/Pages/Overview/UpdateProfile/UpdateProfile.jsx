@@ -278,7 +278,7 @@ const UpdateProfile = () => {
               type="submit"
               className="bg-[#8B5CF6] hover:bg-[#7c4dff] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             >
-              Create Project
+              Update Profile
             </button>
           </div>
         </div>
