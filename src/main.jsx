@@ -35,6 +35,7 @@ import Announcements from "./Pages/Announcements/Announcements.jsx";
 import DepartmentView from "./Pages/DepartmentView/DepartmentView.jsx";
 import AllProjects from "./Pages/AllProjects/AllProjects.jsx";
 import AllTasks from "./Pages/AllTasks/AllTasks.jsx";
+import EditStatus from "./Pages/EditStatus/EditStatus.jsx";
 
 const router = createBrowserRouter([
   {
@@ -121,6 +122,17 @@ const router = createBrowserRouter([
         // Edit Task
         path: "/edit-task/:id",
         element: <EditTask></EditTask>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/tasks/${params.id}`, {
+            headers: {
+              "x-access-token": localStorage.getItem("accessToken"),
+            },
+          }),
+      },
+      {
+        // Edit Task Status
+        path: "/edit-task-status/:id",
+        element: <EditStatus></EditStatus>,
         loader: ({ params }) =>
           fetch(`http://localhost:5000/tasks/${params.id}`, {
             headers: {

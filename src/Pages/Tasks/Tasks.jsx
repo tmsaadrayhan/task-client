@@ -63,6 +63,30 @@ const Tasks = () => {
     };
     fetchadmin();
   }, []);
+  if(admin) {
+    useEffect(() => {
+      const fetchUsers = async () => {
+        try {
+          // Retrieve token from local storage
+          const response = await fetch("http://localhost:5000/users", {
+            headers: {
+              "x-access-token": localStorage.getItem("accessToken"),
+            },
+          });
+  
+          if (response.ok) {
+            const data = await response.json();
+            setUsers(data);
+          } else {
+            console.error("Failed to fetch users");
+          }
+        } catch (error) {
+          console.error("Error fetching users:", error);
+        }
+      };
+      fetchUsers();
+    }, []);
+  }
   if (admin) {
     useEffect(() => {
       fetch("http://localhost:5000/tasks", {
@@ -79,7 +103,7 @@ const Tasks = () => {
   } else {
     useEffect(() => {
       fetch(
-        `http://localhost:5000/tasks/user/${localStorage.getItem("userId")}`,
+        `http://localhost:5000/tasks/user/tasks`,
         {
           method: "GET",
           headers: {
@@ -148,7 +172,7 @@ const Tasks = () => {
                 <th className="px-[1rem]">Project</th>
                 <th className="px-[1rem]">Start Date</th>
                 <th className="px-[1rem]">Finish Date</th>
-                <th className="px-[1rem]">States</th>
+                <th className="px-[1rem]">Status</th>
                 {admin && <th className="px-[1rem]">Assigned</th>}
                 {admin && <th className="px-[1rem]">Action</th>}
               </tr>

@@ -1,9 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import Chart from "chart.js/auto"; // Import Chart library
 import UpdateProfile from "./UpdateProfile/UpdateProfile";
-import Leave from "./Leave/Leave";
-import Projects from "./Projects/Projects";
-import Tasks from "./Tasks/Tasks";
 
 const Overview = () => {
   const [projects, setProjects] = useState([]);
